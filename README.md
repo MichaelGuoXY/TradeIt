@@ -1,0 +1,2 @@
+# TradeIt
+Trade Platform
