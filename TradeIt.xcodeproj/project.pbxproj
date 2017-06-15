@@ -9,23 +9,43 @@
 /* Begin PBXBuildFile section */
 		476B1225F87C1C7C9384D8C4 /* Pods_TradeIt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BDF41D22060D6A1143037500 /* Pods_TradeIt.framework */; };
 		805DC8B51EEF416B006D97A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805DC8B41EEF416B006D97A9 /* AppDelegate.swift */; };
-		805DC8B71EEF416B006D97A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805DC8B61EEF416B006D97A9 /* ViewController.swift */; };
 		805DC8BA1EEF416B006D97A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 805DC8B81EEF416B006D97A9 /* Main.storyboard */; };
 		805DC8BC1EEF416B006D97A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 805DC8BB1EEF416B006D97A9 /* Assets.xcassets */; };
 		805DC8BF1EEF416B006D97A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 805DC8BD1EEF416B006D97A9 /* LaunchScreen.storyboard */; };
 		805DC8C71EEF4469006D97A9 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 805DC8C61EEF4469006D97A9 /* GoogleService-Info.plist */; };
+		80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AD766F1EEF58E100BF1601 /* LoginViewController.swift */; };
+		80AD76741EEF590600BF1601 /* UIViewController+Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AD76731EEF590600BF1601 /* UIViewController+Alerts.m */; };
+		80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3241EF070200041EF0E /* ItemInfo.swift */; };
+		80EDA32D1EF0A2040041EF0E /* SalesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA32C1EF0A2040041EF0E /* SalesManager.swift */; };
+		80EDA32F1EF0A27B0041EF0E /* NetworkContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA32E1EF0A27B0041EF0E /* NetworkContext.swift */; };
+		80EDA3311EF0AAC80041EF0E /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3301EF0AAC80041EF0E /* UserInfo.swift */; };
+		80EDA3331EF0F9A10041EF0E /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3321EF0F9A10041EF0E /* UsersManager.swift */; };
+		80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3341EF222D10041EF0E /* MyStrings.swift */; };
+		80EDA3391EF24F860041EF0E /* PostNewItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */; };
+		80EDA33B1EF24FB80041EF0E /* ImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		181D3E377C428120DE034637 /* Pods-TradeIt.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradeIt.release.xcconfig"; path = "Pods/Target Support Files/Pods-TradeIt/Pods-TradeIt.release.xcconfig"; sourceTree = "<group>"; };
 		805DC8B11EEF416B006D97A9 /* TradeIt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TradeIt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		805DC8B41EEF416B006D97A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		805DC8B61EEF416B006D97A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		805DC8B91EEF416B006D97A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		805DC8BB1EEF416B006D97A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		805DC8BE1EEF416B006D97A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		805DC8C01EEF416B006D97A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		805DC8C61EEF4469006D97A9 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		80AD766F1EEF58E100BF1601 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		80AD76711EEF590600BF1601 /* TradeIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TradeIt-Bridging-Header.h"; sourceTree = "<group>"; };
+		80AD76721EEF590600BF1601 /* UIViewController+Alerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alerts.h"; sourceTree = "<group>"; };
+		80AD76731EEF590600BF1601 /* UIViewController+Alerts.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Alerts.m"; sourceTree = "<group>"; };
+		80EDA3241EF070200041EF0E /* ItemInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemInfo.swift; sourceTree = "<group>"; };
+		80EDA32C1EF0A2040041EF0E /* SalesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SalesManager.swift; sourceTree = "<group>"; };
+		80EDA32E1EF0A27B0041EF0E /* NetworkContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkContext.swift; sourceTree = "<group>"; };
+		80EDA3301EF0AAC80041EF0E /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
+		80EDA3321EF0F9A10041EF0E /* UsersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
+		80EDA3341EF222D10041EF0E /* MyStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyStrings.swift; sourceTree = "<group>"; };
+		80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostNewItemTableViewController.swift; sourceTree = "<group>"; };
+		80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		BDF41D22060D6A1143037500 /* Pods_TradeIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradeIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F931ADA91F9DFCEF54661204 /* Pods-TradeIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradeIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TradeIt/Pods-TradeIt.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -71,15 +91,58 @@
 		805DC8B31EEF416B006D97A9 /* TradeIt */ = {
 			isa = PBXGroup;
 			children = (
-				805DC8B41EEF416B006D97A9 /* AppDelegate.swift */,
-				805DC8B61EEF416B006D97A9 /* ViewController.swift */,
-				805DC8B81EEF416B006D97A9 /* Main.storyboard */,
-				805DC8BB1EEF416B006D97A9 /* Assets.xcassets */,
-				805DC8BD1EEF416B006D97A9 /* LaunchScreen.storyboard */,
-				805DC8C01EEF416B006D97A9 /* Info.plist */,
-				805DC8C61EEF4469006D97A9 /* GoogleService-Info.plist */,
+				80EDA3291EF087BF0041EF0E /* Controllers */,
+				80EDA3281EF087AA0041EF0E /* Views */,
+				80EDA3261EF0873F0041EF0E /* Models */,
+				80EDA3271EF087630041EF0E /* Helpers */,
 			);
 			path = TradeIt;
+			sourceTree = "<group>";
+		};
+		80EDA3261EF0873F0041EF0E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				80EDA3241EF070200041EF0E /* ItemInfo.swift */,
+				80EDA3301EF0AAC80041EF0E /* UserInfo.swift */,
+				80EDA3341EF222D10041EF0E /* MyStrings.swift */,
+				80EDA32C1EF0A2040041EF0E /* SalesManager.swift */,
+				80EDA3321EF0F9A10041EF0E /* UsersManager.swift */,
+				80EDA32E1EF0A27B0041EF0E /* NetworkContext.swift */,
+				80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */,
+				80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		80EDA3271EF087630041EF0E /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				805DC8B41EEF416B006D97A9 /* AppDelegate.swift */,
+				805DC8BB1EEF416B006D97A9 /* Assets.xcassets */,
+				805DC8C01EEF416B006D97A9 /* Info.plist */,
+				805DC8C61EEF4469006D97A9 /* GoogleService-Info.plist */,
+				80AD76721EEF590600BF1601 /* UIViewController+Alerts.h */,
+				80AD76731EEF590600BF1601 /* UIViewController+Alerts.m */,
+				80AD76711EEF590600BF1601 /* TradeIt-Bridging-Header.h */,
+			);
+			name = Helpers;
+			sourceTree = "<group>";
+		};
+		80EDA3281EF087AA0041EF0E /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				805DC8B81EEF416B006D97A9 /* Main.storyboard */,
+				805DC8BD1EEF416B006D97A9 /* LaunchScreen.storyboard */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		80EDA3291EF087BF0041EF0E /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				80AD766F1EEF58E100BF1601 /* LoginViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		D79928C771AA2F3AD487BAD5 /* Pods */ = {
@@ -127,6 +190,7 @@
 					805DC8B01EEF416B006D97A9 = {
 						CreatedOnToolsVersion = 8.3.2;
 						DevelopmentTeam = 6PA6N75D4X;
+						LastSwiftMigration = 0830;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -216,8 +280,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				805DC8B71EEF416B006D97A9 /* ViewController.swift in Sources */,
+				80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */,
+				80EDA3391EF24F860041EF0E /* PostNewItemTableViewController.swift in Sources */,
+				80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */,
+				80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */,
+				80EDA32F1EF0A27B0041EF0E /* NetworkContext.swift in Sources */,
+				80EDA32D1EF0A2040041EF0E /* SalesManager.swift in Sources */,
+				80EDA3331EF0F9A10041EF0E /* UsersManager.swift in Sources */,
+				80EDA33B1EF24FB80041EF0E /* ImagePickerTableViewCell.swift in Sources */,
 				805DC8B51EEF416B006D97A9 /* AppDelegate.swift in Sources */,
+				80AD76741EEF590600BF1601 /* UIViewController+Alerts.m in Sources */,
+				80EDA3311EF0AAC80041EF0E /* UserInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,11 +416,14 @@
 			baseConfigurationReference = F931ADA91F9DFCEF54661204 /* Pods-TradeIt.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 6PA6N75D4X;
 				INFOPLIST_FILE = TradeIt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = michael.guo.TradeIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TradeIt/TradeIt-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -357,11 +433,13 @@
 			baseConfigurationReference = 181D3E377C428120DE034637 /* Pods-TradeIt.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 6PA6N75D4X;
 				INFOPLIST_FILE = TradeIt/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = michael.guo.TradeIt;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "TradeIt/TradeIt-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
@@ -385,6 +463,7 @@
 				805DC8C51EEF416B006D97A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

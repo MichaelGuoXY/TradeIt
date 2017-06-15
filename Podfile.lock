@@ -1,10 +1,18 @@
 PODS:
+  - DKImagePickerController (3.5.5):
+    - DKImagePickerController/Camera (= 3.5.5)
+    - DKImagePickerController/ImageManager (= 3.5.5)
+  - DKImagePickerController/Camera (3.5.5)
+  - DKImagePickerController/ImageManager (3.5.5)
   - Firebase/Auth (4.0.2):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
   - Firebase/Core (4.0.2):
     - FirebaseAnalytics (= 4.0.1)
     - FirebaseCore (= 4.0.2)
+  - Firebase/Database (4.0.2):
+    - Firebase/Core
+    - FirebaseDatabase (= 4.0.0)
   - FirebaseAnalytics (4.0.1):
     - FirebaseCore (~> 4.0)
     - FirebaseInstanceID (~> 2.0)
@@ -15,6 +23,8 @@ PODS:
     - GTMSessionFetcher/Core (~> 1.1)
   - FirebaseCore (4.0.2):
     - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseDatabase (4.0.0):
+    - FirebaseAnalytics (~> 4.0)
   - FirebaseInstanceID (2.0.0):
     - FirebaseCore (~> 4.0)
   - GoogleSignIn (4.0.2):
@@ -41,21 +51,25 @@ PODS:
     - GTMSessionFetcher/Core (= 1.1.10)
 
 DEPENDENCIES:
+  - DKImagePickerController
   - Firebase/Auth
   - Firebase/Core
+  - Firebase/Database
   - GoogleSignIn
 
 SPEC CHECKSUMS:
+  DKImagePickerController: 16f28d10f4384d8c582aa05baab26fc75432a41d
   Firebase: c7ad0731eab26d18a3fc547dd048b0f7cd9c63ae
   FirebaseAnalytics: 4d7040fefc3cd8b291cde35f12cf063d7963f15d
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde
   FirebaseCore: 1a8bf6c795ad07d2918278657954ffd2552e9c17
+  FirebaseDatabase: d829b3a8c3e2ac7a16773c5df226966b0805dfc2
   FirebaseInstanceID: 9fbf536668f4d3f0880e7438456dabd1376e294b
   GoogleSignIn: d7ad83f13480e1f30453471d00d19b5293ac46af
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMOAuth2: 7fc9c10f5c745f4d9850419ea88889fe3baa6b7d
   GTMSessionFetcher: 30d874b96d0d76028f61fbd122801e3f030d47db
 
-PODFILE CHECKSUM: 9434b79511e513b6a9cc2ef6353dc90b830a4ec0
+PODFILE CHECKSUM: a7450e5ba24c1e42eed21698ff53e7f5fa02633d
 
 COCOAPODS: 1.2.1
