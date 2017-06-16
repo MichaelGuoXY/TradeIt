@@ -78,20 +78,26 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
 //                        print("error")
 //                    })
                     
-                    SalesManager.shared.upload(newItem: ItemInfo(user: Auth.auth().currentUser,
-                                                                 title: "Sale cat",
-                                                                 timestamp: "201709122012",
-                                                                 mainImageUrl: "https://hello-world1.jpg",
-                                                                 price: "23",
-                                                                 zipCode: "12345",
-                                                                 details: "details2222",
-                                                                 imageUrls: ["https://hello-world1.jpg",
-                                                                             "https://hello-world2.jpg",
-                                                                             "https://hello-world3.jpg"]),
-                                                                 withSuccessBlock: {success in
-                                                                    print(success)
+//                    SalesManager.shared.upload(newItem: ItemInfo(user: Auth.auth().currentUser,
+//                                                                 title: "Sale cat",
+//                                                                 timestamp: "201709122012",
+//                                                                 mainImageUrl: "https://hello-world1.jpg",
+//                                                                 price: "23",
+//                                                                 zipCode: "12345",
+//                                                                 details: "details2222",
+//                                                                 imageUrls: ["https://hello-world1.jpg",
+//                                                                             "https://hello-world2.jpg",
+//                                                                             "https://hello-world3.jpg"]),
+//                                                                 withSuccessBlock: {success in
+//                                                                    print(success)
+//                    }, withErrorBlock: {error in
+//                        print(error)
+//                    })
+                    
+                    UsersManager.shared.fetch(oldUser: Auth.auth().currentUser, withSuccessBlock: {success in
+                        
                     }, withErrorBlock: {error in
-                        print(error)
+                        
                     })
                     // [END_EXCLUDE]
                 }

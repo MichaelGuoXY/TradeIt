@@ -21,10 +21,11 @@ class UsersManager {
     }
     
     /// Upload new user onto Database
-    func upload(newUser user: User?, withSuccessBlock sblock: @escaping (Void) -> Void, withErrorBlock eblock: @escaping (Void) -> Void) {
+    func upload(newUser user: User?, withSuccessBlock sblock: @escaping (Void) -> Void, withErrorBlock eblock: @escaping (String) -> Void) {
         guard let user = user else {
-            print("upload newUser, while user passed in is not valid")
-            eblock()
+            let error = "upload newUser, while user passed in is not valid"
+            print(error)
+            eblock(error)
             return
         }
         // create new UserInfo obj
@@ -35,19 +36,35 @@ class UsersManager {
                                 dateOfBirth: "",
                                 phoneNumber: "",
                                 zipCode: "") else {
-                                    print("create userInfo error found")
-                                    eblock()
+                                    let error = "create userInfo error found"
+                                    print(error)
+                                    eblock(error)
                                     return
         }
         // upload onto database
         ref.child("users").child(userInfo.uid!).setValue(userInfo.toJSON(), withCompletionBlock: {(error, ref) in
             if let error = error {
-                print("upload new user: Error Found is \(error)")
-                eblock()
+                let errorInfo = "upload new user: Error Found is \(error.localizedDescription)"
+                print(errorInfo)
+                eblock(errorInfo)
             } else {
                 // success
                 sblock()
             }
+        })
+    }
+    
+    func fetch(oldUser user: User?, withSuccessBlock sblock: @escaping (DataSnapshot) -> Void, withErrorBlock eblock: @escaping (String) -> Void) {
+        guard let user = user else {
+            let error = "upload newUser, while user passed in is not valid"
+            print(error)
+            eblock(error)
+            return
+        }
+        
+        // fetch from database
+        ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: {snapshot in
+            sblock(snapshot)
         })
     }
 }
