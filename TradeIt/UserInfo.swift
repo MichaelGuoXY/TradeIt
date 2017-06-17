@@ -16,7 +16,8 @@ class UserInfo {
     var dateOfBirth: String?
     var phoneNumber: String?
     var zipCode: String?
-    var sales: [ItemInfo]?
+    var sales: [String: String]?
+    var watchings: [String: String]?
     
     /// Init for new created user
     init?(uid: String,
@@ -34,7 +35,7 @@ class UserInfo {
         self.dateOfBirth = dateOfBirth
         self.phoneNumber = phoneNumber
         self.zipCode = zipCode
-        self.sales = []
+        self.sales = [:]
     }
     
     /// User to JSON for Database
@@ -71,7 +72,7 @@ class UserInfo {
             let dateOfBirth = json["dateOfBirth"] as? String,
             let phoneNumber = json["phoneNumber"] as? String,
             let zipCode = json["zipCode"] as? String,
-            let sales = json["sales"] as? [ItemInfo] else {
+            let sales = json["sales"] as? [String: String] else {
                 return nil
         }
         self.uid = uid

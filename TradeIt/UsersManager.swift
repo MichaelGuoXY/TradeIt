@@ -56,7 +56,7 @@ class UsersManager {
     
     func fetch(oldUser user: User?, withSuccessBlock sblock: @escaping (DataSnapshot) -> Void, withErrorBlock eblock: @escaping (String) -> Void) {
         guard let user = user else {
-            let error = "upload newUser, while user passed in is not valid"
+            let error = "fetch old user, while user passed in is not valid"
             print(error)
             eblock(error)
             return
