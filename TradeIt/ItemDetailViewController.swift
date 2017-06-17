@@ -1,17 +1,19 @@
 //
-//  PostNewItemTableViewController.swift
+//  ItemDetailViewController.swift
 //  TradeIt
 //
-//  Created by Xiaoyu Guo on 6/14/17.
+//  Created by Xiaoyu Guo on 6/17/17.
 //  Copyright © 2017 Xiaoyu Guo. All rights reserved.
 //
 
 import UIKit
 import DKImagePickerController
 
-class PostNewItemTableViewController: UITableViewController {
+class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
-    // consts
+    // IBOutlets
+    @IBOutlet weak var tableView: UITableView!
+    
     // table view cell
     let imagePickerTableViewCellReuseID = "ImagePickerTableViewCell"
     let titleTableViewCellReuseID = "TitleTableViewCell"
@@ -36,7 +38,7 @@ class PostNewItemTableViewController: UITableViewController {
     }
     
     // buttons
-    lazy var postButton: UIButton = {[unowned self] in
+    lazy var upperButton: UIButton = {[unowned self] in
         var buttonWidth: CGFloat = 60.0
         var buttonSpace: CGFloat = 50.0
         var button = UIButton(frame: CGRect(x: self.view.bounds.width - buttonWidth - buttonSpace,
@@ -47,7 +49,20 @@ class PostNewItemTableViewController: UITableViewController {
         button.layer.cornerRadius = buttonWidth / 2
         button.layer.masksToBounds = true
         return button
-    }()
+        }()
+    
+    lazy var lowerButton: UIButton = {[unowned self] in
+        var buttonWidth: CGFloat = 60.0
+        var buttonSpace: CGFloat = 50.0
+        var button = UIButton(frame: CGRect(x: self.view.bounds.width - buttonWidth - buttonSpace,
+                                            y: self.view.bounds.height - 2 * (buttonWidth + buttonSpace),
+                                            width: buttonWidth,
+                                            height: buttonWidth))
+        button.backgroundColor = UIColor.blue
+        button.layer.cornerRadius = buttonWidth / 2
+        button.layer.masksToBounds = true
+        return button
+        }()
     
     // image picker cell vars
     var imagesCount: Int = 0
@@ -69,25 +84,30 @@ class PostNewItemTableViewController: UITableViewController {
         rowHeightForImagePickerCellAll = rowHeightForImagePickerCell + rowHeightForImagePickerCellOffSet
         
         // layout buttons
-        view.addSubview(postButton)
-        view.bringSubview(toFront: postButton)
+        view.addSubview(upperButton)
+        view.addSubview(lowerButton)
+        view.bringSubview(toFront: upperButton)
+        view.bringSubview(toFront: lowerButton)
         
+        // table view setup
+        tableView.delegate = self
+        tableView.dataSource = self
     }
     
     // MARK: - Table view data source
     
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 5
     }
     
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: titleTableViewCellReuseID, for: indexPath) as? TitleTableViewCell {
@@ -117,7 +137,7 @@ class PostNewItemTableViewController: UITableViewController {
         return UITableViewCell()
     }
     
-    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0, 1, 2:
             return 100
@@ -132,7 +152,7 @@ class PostNewItemTableViewController: UITableViewController {
 }
 
 
-extension PostNewItemTableViewController: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ItemDetailViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return images.count + 1
@@ -193,3 +213,4 @@ extension PostNewItemTableViewController: UICollectionViewDelegate, UICollection
         }
     }
 }
+

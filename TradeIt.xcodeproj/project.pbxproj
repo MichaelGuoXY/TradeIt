@@ -17,6 +17,7 @@
 		809061131EF4FF1C003E6E1A /* PriceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061121EF4FF1C003E6E1A /* PriceTableViewCell.swift */; };
 		809061151EF4FF23003E6E1A /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061141EF4FF23003E6E1A /* DetailTableViewCell.swift */; };
 		809061171EF520CB003E6E1A /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061161EF520CB003E6E1A /* TagTableViewCell.swift */; };
+		809061191EF52D2B003E6E1A /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */; };
 		80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AD766F1EEF58E100BF1601 /* LoginViewController.swift */; };
 		80AD76741EEF590600BF1601 /* UIViewController+Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AD76731EEF590600BF1601 /* UIViewController+Alerts.m */; };
 		80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3241EF070200041EF0E /* ItemInfo.swift */; };
@@ -25,7 +26,6 @@
 		80EDA3311EF0AAC80041EF0E /* UserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3301EF0AAC80041EF0E /* UserInfo.swift */; };
 		80EDA3331EF0F9A10041EF0E /* UsersManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3321EF0F9A10041EF0E /* UsersManager.swift */; };
 		80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3341EF222D10041EF0E /* MyStrings.swift */; };
-		80EDA3391EF24F860041EF0E /* PostNewItemTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */; };
 		80EDA33B1EF24FB80041EF0E /* ImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +42,7 @@
 		809061121EF4FF1C003E6E1A /* PriceTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PriceTableViewCell.swift; sourceTree = "<group>"; };
 		809061141EF4FF23003E6E1A /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		809061161EF520CB003E6E1A /* TagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
+		809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
 		80AD766F1EEF58E100BF1601 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		80AD76711EEF590600BF1601 /* TradeIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TradeIt-Bridging-Header.h"; sourceTree = "<group>"; };
 		80AD76721EEF590600BF1601 /* UIViewController+Alerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alerts.h"; sourceTree = "<group>"; };
@@ -52,7 +53,6 @@
 		80EDA3301EF0AAC80041EF0E /* UserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserInfo.swift; sourceTree = "<group>"; };
 		80EDA3321EF0F9A10041EF0E /* UsersManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UsersManager.swift; sourceTree = "<group>"; };
 		80EDA3341EF222D10041EF0E /* MyStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyStrings.swift; sourceTree = "<group>"; };
-		80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostNewItemTableViewController.swift; sourceTree = "<group>"; };
 		80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		BDF41D22060D6A1143037500 /* Pods_TradeIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradeIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F931ADA91F9DFCEF54661204 /* Pods-TradeIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradeIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TradeIt/Pods-TradeIt.debug.xcconfig"; sourceTree = "<group>"; };
@@ -116,7 +116,6 @@
 				80EDA32C1EF0A2040041EF0E /* SalesManager.swift */,
 				80EDA3321EF0F9A10041EF0E /* UsersManager.swift */,
 				80EDA32E1EF0A27B0041EF0E /* NetworkContext.swift */,
-				80EDA3381EF24F860041EF0E /* PostNewItemTableViewController.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -153,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				80AD766F1EEF58E100BF1601 /* LoginViewController.swift */,
+				809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -293,11 +293,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */,
-				80EDA3391EF24F860041EF0E /* PostNewItemTableViewController.swift in Sources */,
 				809061151EF4FF23003E6E1A /* DetailTableViewCell.swift in Sources */,
 				80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */,
 				80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */,
 				809061111EF4FF15003E6E1A /* TitleTableViewCell.swift in Sources */,
+				809061191EF52D2B003E6E1A /* ItemDetailViewController.swift in Sources */,
 				80EDA32F1EF0A27B0041EF0E /* NetworkContext.swift in Sources */,
 				80EDA32D1EF0A2040041EF0E /* SalesManager.swift in Sources */,
 				809061131EF4FF1C003E6E1A /* PriceTableViewCell.swift in Sources */,
