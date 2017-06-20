@@ -22,10 +22,11 @@ class ItemInfo {
     var price: String?
     var status: String?
     var viewCount: String?
+    var details: String?
+    var tags: String?
     
     // Detail part of item
     var zipCode: String?
-    var details: String?
     var imageUrls: [String]?
     var watchers: [String]?
     
@@ -37,7 +38,8 @@ class ItemInfo {
           price: String,
           zipCode: String,
           details: String,
-          imageUrls: [String]) {
+          imageUrls: [String],
+          tags: String) {
         
         self.sid = "not initialized"
         guard let user = user else {
@@ -53,6 +55,7 @@ class ItemInfo {
         self.zipCode = zipCode
         self.details = details
         self.imageUrls = imageUrls
+        self.tags = tags
         
         // set for default
         self.viewCount = "0"
@@ -68,7 +71,10 @@ class ItemInfo {
             let mainImageUrl = value["mainImageUrl"] as? String,
             let price = value["price"] as? String,
             let status = value["status"] as? String,
-            let viewCount = value["viewCount"] as? String else {
+            let viewCount = value["viewCount"] as? String,
+            let details = value["details"] as? String,
+            let tags = value["tags"] as? String
+            else {
                 print("something went wrong when trying to parse JSON into Item Brief")
                 return nil
         }
@@ -80,20 +86,21 @@ class ItemInfo {
         self.price = price
         self.status = status
         self.viewCount = viewCount
+        self.details = details
+        self.tags = tags
     }
     
     /// Insert detail info into this Item
     func getDetail(fromJSON value: [String: Any]) {
         guard let zipCode = value["zipCode"] as? String,
-            let details = value["details"] as? String,
             let imageUrls = value["imageUrls"] as? [String],
-            let watchers = value["watchers"] as? [String] else {
+            let watchers = value["watchers"] as? [String]
+            else {
                 print("something went wrong when trying to parse JSON into Item Detail")
                 return
         }
         // update detail part of Item
         self.zipCode = zipCode
-        self.details = details
         self.imageUrls = imageUrls
         self.watchers = watchers
     }
@@ -106,7 +113,10 @@ class ItemInfo {
             let mainImageUrl = self.mainImageUrl,
             let price = self.price,
             let status = self.status,
-            let viewCount = self.viewCount else {
+            let viewCount = self.viewCount,
+            let details = self.details,
+            let tags = self.tags
+            else {
                 print("something went wrong when trying to convert Item into JSON Brief")
                 return nil
         }
@@ -118,6 +128,8 @@ class ItemInfo {
         json["price"] = price
         json["status"] = status
         json["viewCount"] = viewCount
+        json["details"] = details
+        json["tags"] = tags
         return json
     }
     
@@ -125,16 +137,15 @@ class ItemInfo {
     func toJSONDetail() -> [String: Any]? {
         guard let uid = self.uid,
             let zipCode = self.zipCode,
-            let details = self.details,
             let imageUrls = self.imageUrls,
-            let watchers = self.watchers else {
+            let watchers = self.watchers
+            else {
                 print("something went wrong when trying to convert Item into JSON Detail")
                 return nil
         }
         var json = [String: Any]()
         json["uid"] = uid
         json["zipCode"] = zipCode
-        json["details"] = details
         json["imageUrls"] = imageUrls
         json["watchers"] = watchers
         return json

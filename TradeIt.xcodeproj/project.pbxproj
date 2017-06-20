@@ -18,6 +18,11 @@
 		809061151EF4FF23003E6E1A /* DetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061141EF4FF23003E6E1A /* DetailTableViewCell.swift */; };
 		809061171EF520CB003E6E1A /* TagTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061161EF520CB003E6E1A /* TagTableViewCell.swift */; };
 		809061191EF52D2B003E6E1A /* ItemDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */; };
+		8090611B1EF672B2003E6E1A /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090611A1EF672B2003E6E1A /* HomeViewController.swift */; };
+		8090611D1EF87C37003E6E1A /* ItemHomeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090611C1EF87C37003E6E1A /* ItemHomeTableViewCell.swift */; };
+		8090611F1EF89506003E6E1A /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090611E1EF89506003E6E1A /* TimeManager.swift */; };
+		809061211EF89CD9003E6E1A /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061201EF89CD9003E6E1A /* ImageManager.swift */; };
+		809061231EF8F02A003E6E1A /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 809061221EF8F02A003E6E1A /* Utils.swift */; };
 		80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80AD766F1EEF58E100BF1601 /* LoginViewController.swift */; };
 		80AD76741EEF590600BF1601 /* UIViewController+Alerts.m in Sources */ = {isa = PBXBuildFile; fileRef = 80AD76731EEF590600BF1601 /* UIViewController+Alerts.m */; };
 		80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3241EF070200041EF0E /* ItemInfo.swift */; };
@@ -43,6 +48,11 @@
 		809061141EF4FF23003E6E1A /* DetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailTableViewCell.swift; sourceTree = "<group>"; };
 		809061161EF520CB003E6E1A /* TagTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagTableViewCell.swift; sourceTree = "<group>"; };
 		809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDetailViewController.swift; sourceTree = "<group>"; };
+		8090611A1EF672B2003E6E1A /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8090611C1EF87C37003E6E1A /* ItemHomeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemHomeTableViewCell.swift; sourceTree = "<group>"; };
+		8090611E1EF89506003E6E1A /* TimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
+		809061201EF89CD9003E6E1A /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+		809061221EF8F02A003E6E1A /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		80AD766F1EEF58E100BF1601 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		80AD76711EEF590600BF1601 /* TradeIt-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TradeIt-Bridging-Header.h"; sourceTree = "<group>"; };
 		80AD76721EEF590600BF1601 /* UIViewController+Alerts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Alerts.h"; sourceTree = "<group>"; };
@@ -116,6 +126,9 @@
 				80EDA32C1EF0A2040041EF0E /* SalesManager.swift */,
 				80EDA3321EF0F9A10041EF0E /* UsersManager.swift */,
 				80EDA32E1EF0A27B0041EF0E /* NetworkContext.swift */,
+				8090611E1EF89506003E6E1A /* TimeManager.swift */,
+				809061201EF89CD9003E6E1A /* ImageManager.swift */,
+				809061221EF8F02A003E6E1A /* Utils.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -144,6 +157,7 @@
 				809061161EF520CB003E6E1A /* TagTableViewCell.swift */,
 				809061141EF4FF23003E6E1A /* DetailTableViewCell.swift */,
 				80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */,
+				8090611C1EF87C37003E6E1A /* ItemHomeTableViewCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -152,6 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				80AD766F1EEF58E100BF1601 /* LoginViewController.swift */,
+				8090611A1EF672B2003E6E1A /* HomeViewController.swift */,
 				809061181EF52D2B003E6E1A /* ItemDetailViewController.swift */,
 			);
 			name = Controllers;
@@ -294,6 +309,7 @@
 			files = (
 				80EDA3251EF070200041EF0E /* ItemInfo.swift in Sources */,
 				809061151EF4FF23003E6E1A /* DetailTableViewCell.swift in Sources */,
+				809061211EF89CD9003E6E1A /* ImageManager.swift in Sources */,
 				80AD76701EEF58E100BF1601 /* LoginViewController.swift in Sources */,
 				80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */,
 				809061111EF4FF15003E6E1A /* TitleTableViewCell.swift in Sources */,
@@ -303,10 +319,14 @@
 				809061131EF4FF1C003E6E1A /* PriceTableViewCell.swift in Sources */,
 				80EDA3331EF0F9A10041EF0E /* UsersManager.swift in Sources */,
 				80EDA33B1EF24FB80041EF0E /* ImagePickerTableViewCell.swift in Sources */,
+				8090611B1EF672B2003E6E1A /* HomeViewController.swift in Sources */,
 				809061171EF520CB003E6E1A /* TagTableViewCell.swift in Sources */,
 				805DC8B51EEF416B006D97A9 /* AppDelegate.swift in Sources */,
+				809061231EF8F02A003E6E1A /* Utils.swift in Sources */,
+				8090611F1EF89506003E6E1A /* TimeManager.swift in Sources */,
 				80AD76741EEF590600BF1601 /* UIViewController+Alerts.m in Sources */,
 				80EDA3311EF0AAC80041EF0E /* UserInfo.swift in Sources */,
+				8090611D1EF87C37003E6E1A /* ItemHomeTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

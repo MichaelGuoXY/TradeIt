@@ -21,11 +21,11 @@ class UsersManager {
     }
     
     /// Upload new user onto Database
-    func upload(newUser user: User?, withSuccessBlock sblock: @escaping (Void) -> Void, withErrorBlock eblock: @escaping (String) -> Void) {
+    func upload(newUser user: User?, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Swift.Void)? = nil) {
         guard let user = user else {
             let error = "upload newUser, while user passed in is not valid"
             print(error)
-            eblock(error)
+            eblock?(error)
             return
         }
         // create new UserInfo obj
@@ -38,7 +38,7 @@ class UsersManager {
                                 zipCode: "") else {
                                     let error = "create userInfo error found"
                                     print(error)
-                                    eblock(error)
+                                    eblock?(error)
                                     return
         }
         // upload onto database
@@ -46,25 +46,25 @@ class UsersManager {
             if let error = error {
                 let errorInfo = "upload new user: Error Found is \(error.localizedDescription)"
                 print(errorInfo)
-                eblock(errorInfo)
+                eblock?(errorInfo)
             } else {
                 // success
-                sblock()
+                sblock?()
             }
         })
     }
     
-    func fetch(oldUser user: User?, withSuccessBlock sblock: @escaping (DataSnapshot) -> Void, withErrorBlock eblock: @escaping (String) -> Void) {
+    func fetch(oldUser user: User?, withSuccessBlock sblock: ((DataSnapshot) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         guard let user = user else {
             let error = "fetch old user, while user passed in is not valid"
             print(error)
-            eblock(error)
+            eblock?(error)
             return
         }
         
         // fetch from database
         ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: {snapshot in
-            sblock(snapshot)
+            sblock?(snapshot)
         })
     }
 }

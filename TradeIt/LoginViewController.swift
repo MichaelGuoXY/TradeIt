@@ -72,37 +72,19 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
                     // User is signed in
                     // [START_EXCLUDE]
                     // Merge prevUser and currentUser accounts and data
-//                    UsersManager.shared.upload(newUser: Auth.auth().currentUser, withSuccessBlock: {success in
-//                        print("success")
-//                    }, withErrorBlock: {error in
-//                        print("error")
-//                    })
-                    
-//                    SalesManager.shared.upload(newItem: ItemInfo(user: Auth.auth().currentUser,
-//                                                                 title: "Sale cat",
-//                                                                 timestamp: "201709122012",
-//                                                                 mainImageUrl: "https://hello-world1.jpg",
-//                                                                 price: "23",
-//                                                                 zipCode: "12345",
-//                                                                 details: "details2222",
-//                                                                 imageUrls: ["https://hello-world1.jpg",
-//                                                                             "https://hello-world2.jpg",
-//                                                                             "https://hello-world3.jpg"]),
-//                                                                 withSuccessBlock: {success in
-//                                                                    print(success)
-//                    }, withErrorBlock: {error in
-//                        print(error)
-//                    })
-                    
-                    UsersManager.shared.fetch(oldUser: Auth.auth().currentUser, withSuccessBlock: {success in
-                        
-                    }, withErrorBlock: {error in
-                        
-                    })
+                    self.naviToHomeViewController()
                     // [END_EXCLUDE]
                 }
             }
             // [END signin_credential]
+        }
+    }
+    
+    func naviToHomeViewController() {
+        if let homeVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+            present(homeVC, animated: true, completion: nil)
+        } else {
+            print("Error found when trying to presewnt home view controller")
         }
     }
     

@@ -8,6 +8,7 @@ target 'TradeIt' do
   # Pods for TradeIt
   pod 'Firebase/Core'
   pod 'Firebase/Auth'
+  pod 'Firebase/Storage'
   pod 'Firebase/Database'
   pod 'GoogleSignIn'
   pod 'DKImagePickerController'
