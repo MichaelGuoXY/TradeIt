@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="6vB-Cw-y26">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VXS-E4-UQl">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -40,7 +40,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trade it" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="T42-yy-eg8">
-                                <rect key="frame" x="46" y="205.5" width="283" height="93"/>
+                                <rect key="frame" x="46" y="205" width="283" height="93"/>
                                 <fontDescription key="fontDescription" name="ChalkboardSE-Bold" family="Chalkboard SE" pointSize="64"/>
                                 <color key="textColor" red="0.065511067709999996" green="0.96430121530000001" blue="0.54432508680000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -48,16 +48,20 @@
                                 <size key="shadowOffset" width="2" height="2"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dnb-hz-yEc" customClass="GIDSignInButton">
-                                <rect key="frame" x="66" y="364.5" width="243" height="36.5"/>
-                                <color key="backgroundColor" red="0.80018618630000005" green="0.95450586989999997" blue="0.96385231599999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="66" y="364" width="243" height="36.5"/>
+                                <color key="backgroundColor" red="0.1674120187" green="0.56325152519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="Dnb-hz-yEc" secondAttribute="height" multiplier="10:1.5" id="qpb-95-qan"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfe-Q5-3zj">
-                                <rect key="frame" x="164" y="434" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfe-Q5-3zj">
+                                <rect key="frame" x="66" y="430.5" width="243" height="44"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="22"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="LOGIN AS GUEST">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="btnClicked:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ks3-o7-3kU"/>
                                 </connections>
@@ -69,8 +73,11 @@
                             <constraint firstItem="Dnb-hz-yEc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="2JT-XU-CdC"/>
                             <constraint firstItem="T42-yy-eg8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-50" id="7J0-dH-0io"/>
                             <constraint firstItem="Dnb-hz-yEc" firstAttribute="top" secondItem="T42-yy-eg8" secondAttribute="bottom" constant="66" id="BgL-xA-UA0"/>
+                            <constraint firstItem="bfe-Q5-3zj" firstAttribute="top" secondItem="Dnb-hz-yEc" secondAttribute="bottom" constant="30" id="Okh-DA-6Io"/>
+                            <constraint firstItem="bfe-Q5-3zj" firstAttribute="leading" secondItem="Dnb-hz-yEc" secondAttribute="leading" id="Qhf-y2-PCg"/>
                             <constraint firstItem="T42-yy-eg8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="kxY-J2-ph5"/>
                             <constraint firstItem="Dnb-hz-yEc" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="50" id="mQZ-4K-d5C"/>
+                            <constraint firstItem="bfe-Q5-3zj" firstAttribute="trailing" secondItem="Dnb-hz-yEc" secondAttribute="trailing" id="v6Z-fH-Z5O"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="DT8-BB-16Y"/>
@@ -569,11 +576,76 @@
                     <size key="freeformSize" width="375" height="1500"/>
                     <connections>
                         <outlet property="tableView" destination="ftb-Cl-GOb" id="BEA-al-xAo"/>
+                        <outlet property="tableViewBottomConstraint" destination="dLv-D1-bsP" id="ZkR-Ad-DFE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aYr-uC-zBl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2401" y="514"/>
+        </scene>
+        <!--Enter Zip Code View Controller-->
+        <scene sceneID="lay-9L-kOE">
+            <objects>
+                <viewController storyboardIdentifier="EnterZipCodeViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qOy-2N-MYm" customClass="EnterZipCodeViewController" customModule="TradeIt" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="p3k-CL-DbL"/>
+                        <viewControllerLayoutGuide type="bottom" id="JAc-pn-8nu"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="i4Z-Bh-nMT">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="bezel" placeholder="12345" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="s3g-tI-VVR">
+                                <rect key="frame" x="36" y="307.5" width="303" height="52"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="33"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad"/>
+                            </textField>
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="acR-Zd-B4Q">
+                                <rect key="frame" x="36" y="389.5" width="303" height="52"/>
+                                <color key="backgroundColor" red="0.1674120187" green="0.56325152519999999" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="28"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <size key="titleShadowOffset" width="1" height="1"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" cocoaTouchSystemColor="lightTextColor"/>
+                                </state>
+                                <connections>
+                                    <action selector="continueBtnClicked:" destination="qOy-2N-MYm" eventType="touchUpInside" id="5oR-of-kxD"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please enter your zip code below..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jrg-ob-zCf">
+                                <rect key="frame" x="66" y="151" width="243" height="76.5"/>
+                                <fontDescription key="fontDescription" name="ChalkboardSE-Regular" family="Chalkboard SE" pointSize="27"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.065511067709999996" green="0.96430121530000001" blue="0.54432508680000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="acR-Zd-B4Q" firstAttribute="centerX" secondItem="i4Z-Bh-nMT" secondAttribute="centerX" id="EUg-P6-I5g"/>
+                            <constraint firstItem="s3g-tI-VVR" firstAttribute="centerY" secondItem="i4Z-Bh-nMT" secondAttribute="centerY" id="QDD-z8-NZy"/>
+                            <constraint firstItem="acR-Zd-B4Q" firstAttribute="leading" secondItem="i4Z-Bh-nMT" secondAttribute="leadingMargin" constant="20" id="SwF-5j-jgl"/>
+                            <constraint firstItem="Jrg-ob-zCf" firstAttribute="centerX" secondItem="i4Z-Bh-nMT" secondAttribute="centerX" id="TNS-bl-cF4"/>
+                            <constraint firstItem="Jrg-ob-zCf" firstAttribute="leading" secondItem="i4Z-Bh-nMT" secondAttribute="leadingMargin" constant="50" id="efe-EO-Y0O"/>
+                            <constraint firstItem="acR-Zd-B4Q" firstAttribute="top" secondItem="s3g-tI-VVR" secondAttribute="bottom" constant="30" id="jQ9-jL-Pjw"/>
+                            <constraint firstItem="s3g-tI-VVR" firstAttribute="top" secondItem="Jrg-ob-zCf" secondAttribute="bottom" constant="80" id="rEo-yL-ZFU"/>
+                            <constraint firstItem="s3g-tI-VVR" firstAttribute="centerX" secondItem="i4Z-Bh-nMT" secondAttribute="centerX" id="uKl-0b-YS7"/>
+                            <constraint firstItem="s3g-tI-VVR" firstAttribute="leading" secondItem="i4Z-Bh-nMT" secondAttribute="leadingMargin" constant="20" id="vFh-TR-rj2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="continueButton" destination="acR-Zd-B4Q" id="4NN-Da-FgT"/>
+                        <outlet property="msgLabel" destination="Jrg-ob-zCf" id="RaY-6Z-ZCv"/>
+                        <outlet property="zipCodeTextField" destination="s3g-tI-VVR" id="Chp-UR-waB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kMM-RX-q6C" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3213.5999999999999" y="138.98050974512745"/>
         </scene>
     </scenes>
     <resources>

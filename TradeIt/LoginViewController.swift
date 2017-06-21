@@ -72,7 +72,23 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
                     // User is signed in
                     // [START_EXCLUDE]
                     // Merge prevUser and currentUser accounts and data
-                    self.naviToHomeViewController()
+                    // download user data from firebase if exists
+                    UsersManager.shared.fetch(oldUser: Auth.auth().currentUser, withSuccessBlock: { snapshot in
+                        // user exists on Firebase Database
+                        if let dict = snapshot.value as? [String: Any] {
+                            Utils.zipCode = dict["zipCode"] as? String ?? ""
+                        }
+                        self.naviToHomeViewController()
+                    }, withErrorBlock: { error in
+                        // user doesn't exist on Firebase Database
+                        // need to upload user onto Firebase Database
+                        UsersManager.shared.upload(newUser: Auth.auth().currentUser, withSuccessBlock: {
+                            Utils.clear()
+                            self.naviToHomeViewController()
+                        }, withErrorBlock: { error in
+                            
+                        })
+                    })
                     // [END_EXCLUDE]
                 }
             }
@@ -81,10 +97,16 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
     }
     
     func naviToHomeViewController() {
-        if let homeVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
-            present(homeVC, animated: true, completion: nil)
+        if Utils.zipCode == nil || Utils.zipCode == "" {
+            if let enterZipCodeVC = storyboard?.instantiateViewController(withIdentifier: "EnterZipCodeViewController") as? EnterZipCodeViewController {
+                present(enterZipCodeVC, animated: true, completion: nil)
+            }
         } else {
-            print("Error found when trying to presewnt home view controller")
+            if let homeVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+                present(homeVC, animated: true, completion: nil)
+            } else {
+                print("Error found when trying to present home view controller")
+            }
         }
     }
     

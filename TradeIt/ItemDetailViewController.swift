@@ -16,10 +16,11 @@ enum ItemDetailViewType {
     case preview
 }
 
-class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class ItemDetailViewController: UIViewController {
     
     // IBOutlets
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     // view type
     var viewType: ItemDetailViewType! {
@@ -74,6 +75,9 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     var imageViews: [UIImageView] = []
     
+    // Detail view status
+    var isDetailEditing: Bool = false
+    
     // buttons
     lazy var leftButton: UIButton = {[unowned self] in
         var buttonWidth: CGFloat = self.view.bounds.width / 2
@@ -107,6 +111,12 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     var rowHeightForImagePickerCellOffSet: CGFloat = 17.0
     var rowHeightForImagePickerCellAll: CGFloat!
     
+    // vars used to create new item info
+    var itemTitle: String?
+    var itemPrice: String?
+    var itemTags: String?
+    var itemDetail: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -132,66 +142,41 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         // table view setup
         tableView.delegate = self
         tableView.dataSource = self
-    }
-    
-    // MARK: - Table view data source
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
+        tableView.allowsSelection = false
         
-        return 1
+        // Notification
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 5
-    }
-    
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch indexPath.row {
-        case 0:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: titleTableViewCellReuseID, for: indexPath) as? TitleTableViewCell {
-                cell.viewType = viewType
-                return cell
+    // Deal with keyboard notification
+    func keyboardNotification(notification: NSNotification) {
+        if let userInfo = notification.userInfo {
+            let endFrame = (userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue)?.cgRectValue
+            let duration: TimeInterval = (userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.doubleValue ?? 0
+            let animationCurveRawNSN = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber
+            let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
+            let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
+            if (endFrame?.origin.y)! >= UIScreen.main.bounds.height {
+                tableViewBottomConstraint.constant = 0.0
+            } else {
+                tableViewBottomConstraint.constant = endFrame?.size.height ?? 0.0
             }
-        case 1:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: tagTableViewCellReuseID, for: indexPath) as? TagTableViewCell {
-                cell.viewType = viewType
-                return cell
-            }
-        case 2:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: priceTableViewCellReuseID, for: indexPath) as? PriceTableViewCell {
-                cell.viewType = viewType
-                return cell
-            }
-        case 3:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: imagePickerTableViewCellReuseID, for: indexPath) as? ImagePickerTableViewCell {
-                cell.viewType = viewType
-                cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self)
-                return cell
-            }
-        case 4:
-            if let cell = tableView.dequeueReusableCell(withIdentifier: detailTableVIewCellReuseID, for: indexPath) as? DetailTableViewCell {
-                cell.viewType = viewType
-                return cell
-            }
-        default:
-            break
+            UIView.animate(withDuration: duration,
+                           delay: TimeInterval(0),
+                           options: animationCurve,
+                           animations: { self.view.layoutIfNeeded() },
+                           completion: { _ in
+                            if self.isDetailEditing {
+                                self.tableView.scrollToRow(at: IndexPath(row: 4, section: 0), at: .bottom, animated: true)
+                                self.isDetailEditing = false
+                            }
+            })
         }
-        return UITableViewCell()
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        switch indexPath.row {
-        case 0, 1, 2:
-            return 100
-        case 3:
-            return CGFloat(images.count / 5 + 1) * rowHeightForImagePickerCellAll + heightForLabelImagePicker
-        case 4:
-            return 150
-        default:
-            return 50
-        }
+    // deinit
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // Buttons Action
@@ -224,12 +209,137 @@ class ItemDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         let sid = ref.child("sales").childByAutoId().key
         ImageManager.shared.upload(imageViews: imageViews, uid: Auth.auth().currentUser?.uid, sid: sid, withSuccessBlock: { imagesURL in
             // success
-            print(imagesURL)
+            // create new item
+            // validate vars
+            if self.validateItemInfo() == false {
+                let msg = "item info required not valid, cannot create new item"
+                print(msg)
+                return
+            }
+            // item info valid
+            let newItem = ItemInfo(user: Auth.auth().currentUser, title: self.itemTitle!, timestamp: TimeManager.shared.getCurrentTimestamp(), mainImageUrl: imagesURL[0], price: self.itemPrice!, zipCode: Utils.zipCode!, details: self.itemDetail!, imageUrls: imagesURL, tags: self.itemTags!)
+            SalesManager.shared.upload(newItem: newItem, withSuccessBlock: { _ in
+                let msg = "new item created successfully"
+                print(msg)
+                self.dismiss(animated: true, completion: nil)
+            }, withErrorBlock: { _ in
+                let msg = "new item not created successfully"
+                print(msg)
+            })
         }, withErrorBlock: { _ in
             // error
-            
+            let msg = "images not uploaded successfully"
+            print(msg)
         })
     }
+    
+    func validateItemInfo() -> Bool {
+        if itemTitle == nil || itemTitle?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            let msg = "item doesn't have a valid title"
+            print(msg)
+            return false
+        }
+        if itemPrice == nil || itemPrice?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            let msg = "item doesn't have a valid price"
+            print(msg)
+            return false
+        }
+        if itemTags == nil || itemTags?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            let msg = "item doesn't have valid tags"
+            print(msg)
+            return false
+        }
+        if itemDetail == nil || itemDetail?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
+            let msg = "item doesn't have a valid detal"
+            print(msg)
+            return false
+        }
+        if Utils.zipCode == nil || Utils.zipCode == "" {
+            let msg = "item doesn't have a valid zip code"
+            print(msg)
+            return false
+        }
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.setEditing(false, animated: true)
+    }
+    
+}
+
+extension ItemDetailViewController: UITextViewDelegate {
+    
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        isDetailEditing = true
+    }
+}
+
+extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return 5
+    }
+    
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch indexPath.row {
+        case 0:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: titleTableViewCellReuseID, for: indexPath) as? TitleTableViewCell {
+                cell.viewType = viewType
+                itemTitle = cell.titleTextField.text
+                return cell
+            }
+        case 1:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: tagTableViewCellReuseID, for: indexPath) as? TagTableViewCell {
+                cell.viewType = viewType
+                itemTags = cell.tagTextField.text
+                return cell
+            }
+        case 2:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: priceTableViewCellReuseID, for: indexPath) as? PriceTableViewCell {
+                cell.viewType = viewType
+                itemPrice = cell.priceTextField.text
+                return cell
+            }
+        case 3:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: imagePickerTableViewCellReuseID, for: indexPath) as? ImagePickerTableViewCell {
+                cell.viewType = viewType
+                cell.setCollectionViewDataSourceDelegate(dataSourceDelegate: self)
+                return cell
+            }
+        case 4:
+            if let cell = tableView.dequeueReusableCell(withIdentifier: detailTableVIewCellReuseID, for: indexPath) as? DetailTableViewCell {
+                cell.viewType = viewType
+                itemDetail = cell.detailTextView.text
+                cell.detailTextView.delegate = self
+                return cell
+            }
+        default:
+            break
+        }
+        return UITableViewCell()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0, 1, 2:
+            return 100
+        case 3:
+            return CGFloat(images.count / 5 + 1) * rowHeightForImagePickerCellAll + heightForLabelImagePicker
+        case 4:
+            return 150
+        default:
+            return 50
+        }
+    }
+    
 }
 
 

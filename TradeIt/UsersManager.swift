@@ -21,7 +21,7 @@ class UsersManager {
     }
     
     /// Upload new user onto Database
-    func upload(newUser user: User?, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Swift.Void)? = nil) {
+    func upload(newUser user: User?, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         guard let user = user else {
             let error = "upload newUser, while user passed in is not valid"
             print(error)
@@ -41,8 +41,9 @@ class UsersManager {
                                     eblock?(error)
                                     return
         }
+        
         // upload onto database
-        ref.child("users").child(userInfo.uid!).setValue(userInfo.toJSON(), withCompletionBlock: {(error, ref) in
+        ref.child("users").child(userInfo.uid!).setValue(userInfo.toJSON(), withCompletionBlock: { (error, ref) in
             if let error = error {
                 let errorInfo = "upload new user: Error Found is \(error.localizedDescription)"
                 print(errorInfo)
@@ -54,6 +55,7 @@ class UsersManager {
         })
     }
     
+    /// Fetch old user info from Database with uid
     func fetch(oldUser user: User?, withSuccessBlock sblock: ((DataSnapshot) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         guard let user = user else {
             let error = "fetch old user, while user passed in is not valid"
@@ -63,8 +65,36 @@ class UsersManager {
         }
         
         // fetch from database
-        ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: {snapshot in
-            sblock?(snapshot)
+        ref.child("users").child(user.uid).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                sblock?(snapshot)
+            } else {
+                let msg = "user not exists on firebase"
+                print(msg)
+                eblock?(msg)
+            }
+        })
+    }
+    
+    /// Update user zip code onto Database
+    func update(oldUser user: User?, zipCode: String, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        guard let user = user else {
+            let error = "update user zip code, while user passed in is not valid"
+            print(error)
+            eblock?(error)
+            return
+        }
+        
+        // update onto database
+        ref.child("users").child(user.uid).child("zipCode").setValue(zipCode, withCompletionBlock: { (error, ref) in
+            if let error = error {
+                let errorInfo = "upload new user: Error Found is \(error.localizedDescription)"
+                print(errorInfo)
+                eblock?(errorInfo)
+            } else {
+                // success
+                sblock?()
+            }
         })
     }
 }
