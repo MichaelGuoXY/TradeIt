@@ -21,4 +21,11 @@ class TimeManager {
         formatter.dateFormat = "MMM d, h:mm a"
         return formatter.string(from: Date())
     }
+    
+    func timeFromTimestamp(timestamp: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MMM d, h:mm a"
+        let timeInterval = Double(timestamp) ?? Date().timeIntervalSince1970
+        return formatter.string(from: Date(timeIntervalSince1970: timeInterval))
+    }
 }

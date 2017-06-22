@@ -39,4 +39,20 @@ class Utils {
             }
         }
     }
+    
+    /// get zip codes at a zip code within miles
+    static func getZipCodes(at zipCode: String, within mile: Int, withSuccessBlock sblock: (([String]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        URLManager.shared.runHTTPRequest(at: zipCode, within: mile, withSuccessBlock: { dict in
+            guard let zipCodes = dict["zip_codes"] as? [String] else {
+                let msg = "get zip code failure, cannot parse"
+                print(msg)
+                eblock?(msg)
+                return
+            }
+            // success
+            sblock?(zipCodes)
+        }, withErrorBlock: { error in
+            eblock?(error)
+        })
+    }
 }

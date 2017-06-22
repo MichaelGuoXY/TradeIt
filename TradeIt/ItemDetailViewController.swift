@@ -217,8 +217,8 @@ class ItemDetailViewController: UIViewController {
                 return
             }
             // item info valid
-            let newItem = ItemInfo(user: Auth.auth().currentUser, title: self.itemTitle!, timestamp: TimeManager.shared.getCurrentTimestamp(), mainImageUrl: imagesURL[0], price: self.itemPrice!, zipCode: Utils.zipCode!, details: self.itemDetail!, imageUrls: imagesURL, tags: self.itemTags!)
-            SalesManager.shared.upload(newItem: newItem, withSuccessBlock: { _ in
+            let newItem = ItemInfo(user: Auth.auth().currentUser, title: self.itemTitle!, timestamp: TimeManager.shared.timestamp(), mainImageUrl: imagesURL[0], price: self.itemPrice!, zipCode: Utils.zipCode!, details: self.itemDetail!, imageUrls: imagesURL, tags: self.itemTags!)
+            SalesManager.shared.upload(newItem: newItem, withSid: sid, withSuccessBlock: { _ in
                 let msg = "new item created successfully"
                 print(msg)
                 self.dismiss(animated: true, completion: nil)

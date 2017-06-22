@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="VXS-E4-UQl">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -119,13 +119,13 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="item-post-time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="p6J-WE-SRX">
-                                                    <rect key="frame" x="23" y="186.5" width="66.5" height="11"/>
+                                                    <rect key="frame" x="23" y="186" width="66.5" height="11"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="9"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="view-count" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tjl-OO-CR7">
-                                                    <rect key="frame" x="109.5" y="184" width="49.5" height="15"/>
+                                                    <rect key="frame" x="109.5" y="184.5" width="49.5" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="15" id="KWZ-Nn-VGC"/>
                                                     </constraints>
@@ -142,7 +142,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="N1U-5n-fPa">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="img_placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="N1U-5n-fPa">
                                                     <rect key="frame" x="8" y="30" width="204.5" height="136.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" secondItem="N1U-5n-fPa" secondAttribute="height" multiplier="199:133" id="30u-y1-7zV"/>
@@ -155,7 +155,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="item-status" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BHR-6a-Rvy">
-                                                    <rect key="frame" x="179" y="184.5" width="51" height="15"/>
+                                                    <rect key="frame" x="179" y="185" width="51" height="15"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="15" id="hwY-uO-Glb"/>
                                                         <constraint firstAttribute="height" constant="15" id="oLb-Bc-Z1M"/>
@@ -184,7 +184,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="7YE-qI-yCu">
                                                     <rect key="frame" x="8" y="186.5" width="10" height="10"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="7YE-qI-yCu" secondAttribute="height" multiplier="1:1" id="eqI-KL-ndc"/>
+                                                        <constraint firstAttribute="height" constant="10" id="mOw-qP-oXa"/>
                                                         <constraint firstAttribute="width" constant="10" id="zLD-iJ-BdA"/>
                                                     </constraints>
                                                 </imageView>
@@ -198,11 +198,11 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="view_counts" translatesAutoresizingMaskIntoConstraints="NO" id="oi8-QA-uI8">
                                                     <rect key="frame" x="94.5" y="186.5" width="10" height="10"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="oi8-QA-uI8" secondAttribute="height" multiplier="1:1" id="Sfc-78-hd1"/>
                                                         <constraint firstAttribute="width" constant="10" id="gQx-9h-4am"/>
+                                                        <constraint firstAttribute="height" constant="10" id="hyB-x8-UyK"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bPh-0R-BVj">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPh-0R-BVj">
                                                     <rect key="frame" x="227.5" y="70" width="139.5" height="111.5"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
@@ -213,7 +213,7 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="tags" translatesAutoresizingMaskIntoConstraints="NO" id="VIv-uK-BfB">
                                                     <rect key="frame" x="8" y="171.5" width="10" height="10"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" secondItem="VIv-uK-BfB" secondAttribute="height" multiplier="1:1" id="k3f-hO-cak"/>
+                                                        <constraint firstAttribute="height" constant="10" id="5Uh-d8-ZNV"/>
                                                         <constraint firstAttribute="width" constant="10" id="kgF-Tb-MuX"/>
                                                     </constraints>
                                                 </imageView>
@@ -221,7 +221,7 @@
                                                     <rect key="frame" x="164" y="186.5" width="10" height="10"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="10" id="EYu-Tp-spg"/>
-                                                        <constraint firstAttribute="width" secondItem="104-L8-Aju" secondAttribute="height" multiplier="1:1" id="alm-dz-MRx"/>
+                                                        <constraint firstAttribute="height" constant="10" id="IhA-BO-2te"/>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
@@ -288,7 +288,10 @@
                                     <constraint firstAttribute="width" secondItem="uC9-vJ-qlP" secondAttribute="height" multiplier="1:1" id="2L6-er-Qyo"/>
                                     <constraint firstAttribute="width" constant="80" id="sFQ-pA-hyc"/>
                                 </constraints>
-                                <state key="normal" image="post"/>
+                                <size key="titleShadowOffset" width="2" height="2"/>
+                                <state key="normal" image="post">
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="postNewItemButtonClicked:" destination="VXS-E4-UQl" eventType="touchUpInside" id="mG8-bG-8AL"/>
                                 </connections>
@@ -299,7 +302,10 @@
                                     <constraint firstAttribute="width" secondItem="1Sx-5k-ni8" secondAttribute="height" multiplier="1:1" id="Pmd-5c-11g"/>
                                     <constraint firstAttribute="width" constant="50" id="RBF-JR-NZK"/>
                                 </constraints>
-                                <state key="normal" image="profile"/>
+                                <size key="titleShadowOffset" width="2" height="2"/>
+                                <state key="normal" image="profile">
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="profileButtonClicked:" destination="VXS-E4-UQl" eventType="touchUpInside" id="qxv-6t-TAW"/>
                                 </connections>
@@ -310,7 +316,10 @@
                                     <constraint firstAttribute="width" secondItem="7or-Ke-l5d" secondAttribute="height" multiplier="1:1" id="5ue-YU-dL5"/>
                                     <constraint firstAttribute="width" constant="50" id="Fke-6q-gQ9"/>
                                 </constraints>
-                                <state key="normal" image="search"/>
+                                <size key="titleShadowOffset" width="2" height="2"/>
+                                <state key="normal" image="search">
+                                    <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="searchButtonClicked:" destination="VXS-E4-UQl" eventType="touchUpInside" id="8lk-Jb-cFg"/>
                                 </connections>
@@ -336,6 +345,7 @@
                         <outlet property="postNewItemButton" destination="uC9-vJ-qlP" id="dB3-i2-Up8"/>
                         <outlet property="profileButton" destination="1Sx-5k-ni8" id="bBx-IC-t5U"/>
                         <outlet property="searchButton" destination="7or-Ke-l5d" id="Hed-8U-Wfj"/>
+                        <outlet property="tableView" destination="Bgd-fD-34n" id="CQl-0r-odW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KQP-Ud-82J" userLabel="First Responder" sceneMemberID="firstResponder"/>

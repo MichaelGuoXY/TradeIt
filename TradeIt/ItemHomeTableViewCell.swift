@@ -38,7 +38,8 @@ class ItemHomeTableViewCell: UITableViewCell {
         }
         titleLabel.text = item.title
         // download image for this item
-        
+        ImageManager.shared.fetchImage(with: item, at: mainImageView)
+        mainImageView.clipsToBounds = true
         
         // fetch seller name for uid in this item
         SalesManager.shared.fetchUserName(withUid: item.uid, withSuccessBlock: {userName in
@@ -46,9 +47,14 @@ class ItemHomeTableViewCell: UITableViewCell {
         }, withErrorBlock: nil)
         
         priceLabel.text = item.price
+        
         detailTextView.text = item.details
+        detailTextView.isEditable = false
+        
         tagLabel.text = item.tags
-        timeLabel.text = item.timestamp
+        
+        timeLabel.text = TimeManager.shared.timeFromTimestamp(timestamp: item.timestamp!)
+        
         viewCountLabel.text = item.viewCount
         itemStatusLabel.text = item.status
     }

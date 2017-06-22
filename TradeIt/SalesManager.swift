@@ -21,7 +21,7 @@ class SalesManager {
     }
     
     /// Upload new created Item onto database
-    func upload(newItem item: ItemInfo?, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+    func upload(newItem item: ItemInfo?, withSid sid: String, withSuccessBlock sblock: ((Void) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         guard let user = Auth.auth().currentUser else {
             let error = "user does not exist, upload new item failing"
             print(error)
@@ -36,7 +36,7 @@ class SalesManager {
         }
         // [Firebase Database Begin]
         let uid = user.uid
-        let key = ref.child("sales").childByAutoId().key
+        let key = sid
         let childUpdates = ["/users/\(uid)/sales/\(key)": ["status" : item.status ?? MyStrings.itemStatusDefault],
                             "/sales/\(key)": item.toJSONBrief() ?? [:],
                             "/salesDetail/\(key)": item.toJSONDetail() ?? [:],
@@ -107,5 +107,71 @@ class SalesManager {
             print(error.localizedDescription)
             eblock?(error.localizedDescription)
         }
+    }
+    
+    /// Fetch items that meet zip code requirement
+    func fetchItems(with zipCode: String, withSuccessBlock sblock: (([ItemInfo]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        fetchSids(with: zipCode, withSuccessBlock: { sids in
+            var items: [ItemInfo] = []
+            for sid in sids {
+                self.fetchItemBrief(with: sid, withSuccessBlock: { item in
+                    items.append(item)
+                    if items.count == sids.count {
+                        // success
+                        sblock?(items)
+                    }
+                }, withErrorBlock: nil)
+            }
+        }, withErrorBlock: nil)
+    }
+    
+    
+    /// Fetch items-sid tht meet the zip code requirement
+    func fetchSids(with zipCode: String, withSuccessBlock sblock: (([String]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        let zipCodeRef = ref.child("zipCodes").child(zipCode)
+        zipCodeRef.observe(.value, with: { snapshot in
+            if snapshot.exists() {
+                // success
+                if let dict = snapshot.value as? [String: Any] {
+                    sblock?(Array(dict.keys))
+                } else {
+                    // error
+                    let msg = "fetch zip codes from Firebase, snapshot cannot be converted into json"
+                    print(msg)
+                    eblock?(msg)
+                }
+            } else {
+                // error
+                let msg = "fetch zip codes from Firebase, snapshot is null"
+                print(msg)
+                eblock?(msg)
+            }
+        })
+    }
+    
+    /// Fetch single item with sid
+    func fetchItemBrief(with sid: String, withSuccessBlock sblock: ((ItemInfo) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        let itemRef = ref.child("sales").child(sid)
+        itemRef.observe(.value, with: { snapshot in
+            if snapshot.exists() {
+                // success
+                if let dict = snapshot.value as? [String: Any] {
+                    let item = ItemInfo(sid: sid, fromJSON: dict)
+                    if let item = item {
+                        sblock?(item)
+                    } else {
+                        // error
+                        let msg = "item created is nil"
+                        print(msg)
+                        eblock?(msg)
+                    }
+                }
+            } else {
+                // error
+                let msg = "fetch item from Firebase, snapshot is null"
+                print(msg)
+                eblock?(msg)
+            }
+        })
     }
 }

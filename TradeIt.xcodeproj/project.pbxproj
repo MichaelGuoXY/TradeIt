@@ -33,6 +33,7 @@
 		80EDA3351EF222D10041EF0E /* MyStrings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA3341EF222D10041EF0E /* MyStrings.swift */; };
 		80EDA33B1EF24FB80041EF0E /* ImagePickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */; };
 		80F28D451EFA33200018B0BE /* EnterZipCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F28D441EFA33200018B0BE /* EnterZipCodeViewController.swift */; };
+		80F28D471EFC36E30018B0BE /* URLManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 80F28D461EFC36E30018B0BE /* URLManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -66,6 +67,7 @@
 		80EDA3341EF222D10041EF0E /* MyStrings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyStrings.swift; sourceTree = "<group>"; };
 		80EDA33A1EF24FB80041EF0E /* ImagePickerTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerTableViewCell.swift; sourceTree = "<group>"; };
 		80F28D441EFA33200018B0BE /* EnterZipCodeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnterZipCodeViewController.swift; sourceTree = "<group>"; };
+		80F28D461EFC36E30018B0BE /* URLManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLManager.swift; sourceTree = "<group>"; };
 		BDF41D22060D6A1143037500 /* Pods_TradeIt.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TradeIt.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F931ADA91F9DFCEF54661204 /* Pods-TradeIt.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TradeIt.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TradeIt/Pods-TradeIt.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,6 +133,7 @@
 				8090611E1EF89506003E6E1A /* TimeManager.swift */,
 				809061201EF89CD9003E6E1A /* ImageManager.swift */,
 				809061221EF8F02A003E6E1A /* Utils.swift */,
+				80F28D461EFC36E30018B0BE /* URLManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				8090611B1EF672B2003E6E1A /* HomeViewController.swift in Sources */,
 				80F28D451EFA33200018B0BE /* EnterZipCodeViewController.swift in Sources */,
 				809061171EF520CB003E6E1A /* TagTableViewCell.swift in Sources */,
+				80F28D471EFC36E30018B0BE /* URLManager.swift in Sources */,
 				805DC8B51EEF416B006D97A9 /* AppDelegate.swift in Sources */,
 				809061231EF8F02A003E6E1A /* Utils.swift in Sources */,
 				8090611F1EF89506003E6E1A /* TimeManager.swift in Sources */,

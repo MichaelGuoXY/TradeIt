@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import FirebaseStorageUI
 
 class ImageManager {
     static let shared = ImageManager()
@@ -169,8 +170,20 @@ class ImageManager {
                 }
             }
         }
+    }
+    
+    /// fetch image of certain item
+    func fetchImage(with item: ItemInfo, at imageView: UIImageView) {
         
-        // manage upload task
+        // Reference to an image file in Firebase Storage
+        let imageRef = imagesRootRef.child(item.uid!).child(item.sid!).child("0.jpg")
         
+        // Placeholder image
+        let placeholderImage = UIImage(named: "img_placeholder")
+        
+        // Load the image using SDWebImage
+        imageView.sd_setShowActivityIndicatorView(true)
+        imageView.sd_setIndicatorStyle(.white)
+        imageView.sd_setImage(with: imageRef, placeholderImage: placeholderImage)
     }
 }
