@@ -91,7 +91,7 @@ class SalesManager {
     }
     
     /// Fetch userName with uid
-    func fetchUserName(withUid uid: String?, withSuccessBlock sblock: ((String) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+    func fetchSeller(withUid uid: String?, withSuccessBlock sblock: ((String, String?) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         guard let uid = uid else {
             let error = "Error: uid not valid"
             print(error)
@@ -102,31 +102,28 @@ class SalesManager {
         ref.child("users").child(uid).observeSingleEvent(of: .value, with: {snapshot in
             let dict = snapshot.value as? [String: Any] ?? [:]
             let userName = dict["userName"] as? String ?? "no name"
-            sblock?(userName)
+            let photoURL = dict["photoURL"] as? String
+            sblock?(userName, photoURL)
         }) {error in
             print(error.localizedDescription)
             eblock?(error.localizedDescription)
         }
     }
     
-    /// Fetch items that meet zip code requirement
-    func fetchItems(with zipCode: String, withSuccessBlock sblock: (([ItemInfo]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+    /// Fetch items that meets zip code requirement
+    func fetchItems(with zipCode: String, withSuccessBlock sblock: ((ItemInfo) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         fetchSids(with: zipCode, withSuccessBlock: { sids in
-            var items: [ItemInfo] = []
             for sid in sids {
                 self.fetchItemBrief(with: sid, withSuccessBlock: { item in
-                    items.append(item)
-                    if items.count == sids.count {
-                        // success
-                        sblock?(items)
-                    }
+                    // success
+                    sblock?(item)
                 }, withErrorBlock: nil)
             }
         }, withErrorBlock: nil)
     }
     
     
-    /// Fetch items-sid tht meet the zip code requirement
+    /// Fetch items-sid that meets the zip code requirement
     func fetchSids(with zipCode: String, withSuccessBlock sblock: (([String]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         let zipCodeRef = ref.child("zipCodes").child(zipCode)
         zipCodeRef.observe(.value, with: { snapshot in
@@ -165,6 +162,24 @@ class SalesManager {
                         print(msg)
                         eblock?(msg)
                     }
+                }
+            } else {
+                // error
+                let msg = "fetch item from Firebase, snapshot is null"
+                print(msg)
+                eblock?(msg)
+            }
+        })
+    }
+    
+    /// Fetch item detail info with sid
+    func fetchItemDetail(with sid: String, withSuccessBlock sblock: (([String: Any]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        let itemRef = ref.child("salesDetail").child(sid)
+        itemRef.observe(.value, with: { snapshot in
+            if snapshot.exists() {
+                // success
+                if let dict = snapshot.value as? [String: Any] {
+                    sblock?(dict)
                 }
             } else {
                 // error

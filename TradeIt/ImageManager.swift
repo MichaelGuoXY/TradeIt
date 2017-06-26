@@ -186,4 +186,40 @@ class ImageManager {
         imageView.sd_setIndicatorStyle(.white)
         imageView.sd_setImage(with: imageRef, placeholderImage: placeholderImage)
     }
+    
+    /// fetch images of certain item
+    func fetchImage(with item: ItemInfo) -> [UIImageView] {
+        var imageViews: [UIImageView] = []
+        
+        // Reference to an image file in Firebase Storage
+        var i = 0
+        while i < (item.imageUrls?.count)! {
+            let imageRef = imagesRootRef.child(item.uid!).child(item.sid!).child("\(i).jpg")
+            
+            // Placeholder image
+            let placeholderImage = UIImage(named: "img_placeholder")
+            
+            // Load the image using SDWebImage
+            let imageView = UIImageView()
+            imageView.contentMode = .scaleAspectFill
+            imageView.sd_setShowActivityIndicatorView(true)
+            imageView.sd_setIndicatorStyle(.white)
+            imageView.sd_setImage(with: imageRef, placeholderImage: placeholderImage)
+            
+            imageViews.append(imageView)
+            
+            i += 1
+        }
+        
+        return imageViews
+    }
+    
+    /// fetch image for seller profile image
+    func fetchImage(withURL url: String?, at imageView: UIImageView) {
+        if let url = url {
+            if let url = URL(string: url) {
+                imageView.sd_setImage(with: url)
+            }
+        }
+    }
 }

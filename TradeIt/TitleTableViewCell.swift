@@ -25,24 +25,19 @@ class TitleTableViewCell: UITableViewCell {
     
     func setupCellAttrs() {
         titleTextField.layer.borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
-        titleTextField.layer.borderWidth = {
-            if let viewType = viewType {
-                if viewType == .preview {
-                    return 0.0
-                } else {
-                    return 2.0
-                }
-            } else {
-                return 2.0
-            }
-        }()
+        
         titleTextField.layer.cornerRadius = 5.0
+        titleTextField.backgroundColor = UIColor.clear
         titleTextField.layer.masksToBounds = true
         if let viewType = viewType {
-            if viewType == .preview {
+            if viewType == .preview || viewType == .detail {
                 titleTextField.isEnabled = false
+                titleTextField.borderStyle = .none
+                titleTextField.layer.borderWidth = 0.0
             } else {
                 titleTextField.isEnabled = true
+                titleTextField.borderStyle = .roundedRect
+                titleTextField.layer.borderWidth = 2.0
             }
         }
     }

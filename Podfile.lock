@@ -1,9 +1,9 @@
 PODS:
-  - DKImagePickerController (3.5.5):
-    - DKImagePickerController/Camera (= 3.5.5)
-    - DKImagePickerController/ImageManager (= 3.5.5)
-  - DKImagePickerController/Camera (3.5.5)
-  - DKImagePickerController/ImageManager (3.5.5)
+  - DKImagePickerController (3.5.6):
+    - DKImagePickerController/Camera (= 3.5.6)
+    - DKImagePickerController/ImageManager (= 3.5.6)
+  - DKImagePickerController/Camera (3.5.6)
+  - DKImagePickerController/ImageManager (3.5.6)
   - Firebase/Auth (4.0.2):
     - Firebase/Core
     - FirebaseAuth (= 4.0.0)
@@ -73,7 +73,7 @@ DEPENDENCIES:
   - GoogleSignIn
 
 SPEC CHECKSUMS:
-  DKImagePickerController: 16f28d10f4384d8c582aa05baab26fc75432a41d
+  DKImagePickerController: 6f4e3e8a1d1b00371bfb11c362583892a9664ee4
   Firebase: c7ad0731eab26d18a3fc547dd048b0f7cd9c63ae
   FirebaseAnalytics: 4d7040fefc3cd8b291cde35f12cf063d7963f15d
   FirebaseAuth: ebb6abcbabae00fc47446d690c19ce68d8484fde

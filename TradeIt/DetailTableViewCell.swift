@@ -28,7 +28,7 @@ class DetailTableViewCell: UITableViewCell {
         detailTextView.layer.borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
         detailTextView.layer.borderWidth = {
             if let viewType = viewType {
-                if viewType == .preview {
+                if viewType == .preview || viewType == .detail {
                     return 0.0
                 } else {
                     return 2.0
@@ -42,8 +42,13 @@ class DetailTableViewCell: UITableViewCell {
         if let viewType = viewType {
             if viewType == .preview {
                 detailTextView.isEditable = false
+                detailTextView.isScrollEnabled = false
+            } else if viewType == .detail {
+                detailTextView.isEditable = false
+                detailTextView.isScrollEnabled = true
             } else {
                 detailTextView.isEditable = true
+                detailTextView.isScrollEnabled = true
             }
         }
     }

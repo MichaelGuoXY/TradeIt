@@ -28,7 +28,7 @@ class ItemInfo {
     // Detail part of item
     var zipCode: String?
     var imageUrls: [String]?
-    var watchers: [String]?
+    var watchers: [String: Any]?
     
     /// Init for the first time item created
     init?(user: User?,
@@ -59,7 +59,7 @@ class ItemInfo {
         
         // set for default
         self.viewCount = "0"
-        self.watchers = []
+        self.watchers = [:]
     }
     
     /// Convet JSON into Item Brief
@@ -93,8 +93,8 @@ class ItemInfo {
     /// Insert detail info into this Item
     func getDetail(fromJSON value: [String: Any]) {
         guard let zipCode = value["zipCode"] as? String,
-            let imageUrls = value["imageUrls"] as? [String],
-            let watchers = value["watchers"] as? [String]
+            let imageUrls = value["imageUrls"] as? [String]
+//            let watchers = value["watchers"] as? [String: Any]
             else {
                 print("something went wrong when trying to parse JSON into Item Detail")
                 return
@@ -102,7 +102,7 @@ class ItemInfo {
         // update detail part of Item
         self.zipCode = zipCode
         self.imageUrls = imageUrls
-        self.watchers = watchers
+//        self.watchers = watchers
     }
     
     /// Convert item into JSON Brief

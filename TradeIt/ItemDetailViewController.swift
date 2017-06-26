@@ -14,6 +14,7 @@ enum ItemDetailViewType {
     case new
     case edit
     case preview
+    case detail
 }
 
 class ItemDetailViewController: UIViewController {
@@ -21,6 +22,7 @@ class ItemDetailViewController: UIViewController {
     // IBOutlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTopConstraint: NSLayoutConstraint!
     
     // view type
     var viewType: ItemDetailViewType! {
@@ -33,19 +35,21 @@ class ItemDetailViewController: UIViewController {
             // button title changes
             switch viewType! {
             case .new, .edit:
-                DispatchQueue.main.async {
                     self.leftButton.setTitle("Cancel", for: .normal)
                     self.leftButton.backgroundColor = UIColor.yellow
                     self.rightButton.setTitle("Continue", for: .normal)
                     self.rightButton.backgroundColor = UIColor.green
-                }
             case .preview:
-                DispatchQueue.main.async {
                     self.leftButton.setTitle("Edit", for: .normal)
                     self.leftButton.backgroundColor = UIColor.orange
                     self.rightButton.setTitle("Post", for: .normal)
                     self.rightButton.backgroundColor = UIColor.black
-                }
+            case .detail:
+                    self.leftButton.setTitle("Back", for: .normal)
+                    self.leftButton.backgroundColor = UIColor.blue
+                    self.rightButton.setTitle("Watch", for: .normal)
+                    self.rightButton.backgroundColor = UIColor.red
+                    self.tableViewTopConstraint.constant = -64.0
             }
         }
     }
@@ -68,12 +72,20 @@ class ItemDetailViewController: UIViewController {
     var images: [UIImage] = [] {
         didSet {
             if images.count == imagesCount || images.count == 0 {
-                tableView.reloadRows(at: [IndexPath(row: 2, section: 0)], with: .fade)
+                tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .fade)
             }
         }
     }
     
-    var imageViews: [UIImageView] = []
+    var imageViews: [UIImageView] = [] {
+        didSet {
+            if viewType != .detail {
+                return
+            }
+            // .detail mode
+            tableView.reloadRows(at: [IndexPath(row: 3, section: 0)], with: .fade)
+        }
+    }
     
     // Detail view status
     var isDetailEditing: Bool = false
@@ -117,6 +129,23 @@ class ItemDetailViewController: UIViewController {
     var itemTags: String?
     var itemDetail: String?
     
+    // item to show
+    var item: ItemInfo! {
+        didSet {
+            // prepare for item detail view
+            if viewType == .detail {
+                // pre-fetch images for this item
+                SalesManager.shared.fetchItemDetail(with: item.sid!, withSuccessBlock: { dict in
+                    self.item.getDetail(fromJSON: dict)
+                    self.imageViews = ImageManager.shared.fetchImage(with: self.item)
+                }, withErrorBlock: nil)
+            }
+        }
+    }
+    
+    // vars used to auto size detail cell text view
+    var detailTextViewContentHeight: CGFloat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -144,8 +173,19 @@ class ItemDetailViewController: UIViewController {
         tableView.dataSource = self
         tableView.allowsSelection = false
         
+        // tap gesture added to table view
+        let tgr = UITapGestureRecognizer(target: self, action: #selector(self.viewTapped(_:)))
+        tgr.cancelsTouchesInView = false
+        tgr.delegate = self
+        self.tableView.addGestureRecognizer(tgr)
+        
         // Notification
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
+        
+        // constraints
+        // table view bottom
+        self.tableViewBottomConstraint.constant = 50.0
+        
     }
     
     // Deal with keyboard notification
@@ -157,9 +197,9 @@ class ItemDetailViewController: UIViewController {
             let animationCurveRaw = animationCurveRawNSN?.uintValue ?? UIViewAnimationOptions.curveEaseInOut.rawValue
             let animationCurve: UIViewAnimationOptions = UIViewAnimationOptions(rawValue: animationCurveRaw)
             if (endFrame?.origin.y)! >= UIScreen.main.bounds.height {
-                tableViewBottomConstraint.constant = 0.0
+                tableViewBottomConstraint.constant = 50.0
             } else {
-                tableViewBottomConstraint.constant = endFrame?.size.height ?? 0.0
+                tableViewBottomConstraint.constant = endFrame?.size.height ?? 50.0
             }
             UIView.animate(withDuration: duration,
                            delay: TimeInterval(0),
@@ -186,6 +226,8 @@ class ItemDetailViewController: UIViewController {
             naviBackToHomeView()
         case .preview:
             viewType = .edit
+        case .detail:
+            popViewController()
         }
     }
     
@@ -195,12 +237,24 @@ class ItemDetailViewController: UIViewController {
             viewType = .preview
         case .preview:
             postItem()
+        case .detail:
+            watchThisItem()
         }
     }
     
     // navi back to home view
     func naviBackToHomeView() {
         dismiss(animated: true, completion: nil)
+    }
+    
+    /// pop this view controller from navigation controller
+    func popViewController() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    /// Watch this item func
+    func watchThisItem() {
+        
     }
     
     // post item .new or .edit
@@ -262,16 +316,23 @@ class ItemDetailViewController: UIViewController {
         return true
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.setEditing(false, animated: true)
-    }
+}
+
+extension ItemDetailViewController: UIGestureRecognizerDelegate {
     
+    func viewTapped(_ tgr: UITapGestureRecognizer) {
+        self.view.endEditing(true)
+    }
 }
 
 extension ItemDetailViewController: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         isDetailEditing = true
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        detailTextViewContentHeight = textView.contentSize.height
     }
 }
 
@@ -293,19 +354,40 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             if let cell = tableView.dequeueReusableCell(withIdentifier: titleTableViewCellReuseID, for: indexPath) as? TitleTableViewCell {
                 cell.viewType = viewType
-                itemTitle = cell.titleTextField.text
+                switch viewType! {
+                case .preview:
+                    itemTitle = cell.titleTextField.text
+                case .detail:
+                    cell.titleTextField.text = item.title
+                default:
+                    break
+                }
                 return cell
             }
         case 1:
             if let cell = tableView.dequeueReusableCell(withIdentifier: tagTableViewCellReuseID, for: indexPath) as? TagTableViewCell {
                 cell.viewType = viewType
-                itemTags = cell.tagTextField.text
+                switch viewType! {
+                case .preview:
+                    itemTags = cell.tagTextField.text
+                case .detail:
+                    cell.tagTextField.text = item.tags
+                default:
+                    break
+                }
                 return cell
             }
         case 2:
             if let cell = tableView.dequeueReusableCell(withIdentifier: priceTableViewCellReuseID, for: indexPath) as? PriceTableViewCell {
                 cell.viewType = viewType
-                itemPrice = cell.priceTextField.text
+                switch viewType! {
+                case .preview:
+                    itemPrice = cell.priceTextField.text
+                case .detail:
+                    cell.priceTextField.text = item.price
+                default:
+                    break
+                }
                 return cell
             }
         case 3:
@@ -317,8 +399,15 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             if let cell = tableView.dequeueReusableCell(withIdentifier: detailTableVIewCellReuseID, for: indexPath) as? DetailTableViewCell {
                 cell.viewType = viewType
-                itemDetail = cell.detailTextView.text
-                cell.detailTextView.delegate = self
+                switch viewType! {
+                case .preview:
+                    itemDetail = cell.detailTextView.text
+                    cell.detailTextView.delegate = self
+                case .detail:
+                    cell.detailTextView.text = item.details
+                default:
+                    break
+                }
                 return cell
             }
         default:
@@ -332,9 +421,18 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 0, 1, 2:
             return 100
         case 3:
-            return CGFloat(images.count / 5 + 1) * rowHeightForImagePickerCellAll + heightForLabelImagePicker
+            if viewType == .preview || viewType == .detail {
+                return CGFloat((images.count - 1) / 5 + 1) * rowHeightForImagePickerCellAll + heightForLabelImagePicker
+            } else {
+                return CGFloat(images.count / 5 + 1) * rowHeightForImagePickerCellAll + heightForLabelImagePicker
+            }
         case 4:
-            return 150
+            if viewType == .preview {
+                return 26.0 + 5.0 + detailTextViewContentHeight! + 30.0
+            }
+            else {
+                return 200
+            }
         default:
             return 50
         }
@@ -351,6 +449,8 @@ extension ItemDetailViewController: UICollectionViewDelegate, UICollectionViewDa
             return images.count + 1
         case .preview:
             return images.count
+        case .detail:
+            return imageViews.count
         }
     }
     
@@ -389,8 +489,15 @@ extension ItemDetailViewController: UICollectionViewDelegate, UICollectionViewDa
             cell.contentView.addSubview(imageView)
             cell.contentView.bringSubview(toFront: imageView)
             return cell
+        case .detail:
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: imagePickerImageReuseID,
+                                                          for: indexPath)
+            let imageView = imageViews[indexPath.item]
+            imageView.frame = cell.contentView.bounds
+            cell.contentView.addSubview(imageView)
+            cell.contentView.bringSubview(toFront: imageView)
+            return cell
         }
-        
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
@@ -420,6 +527,9 @@ extension ItemDetailViewController: UICollectionViewDelegate, UICollectionViewDa
                 present(pickerController, animated: true, completion: nil)
             }
         case .preview:
+            break
+        case .detail:
+            // TODO: fullscreen image view
             break
         }
     }

@@ -20,6 +20,7 @@ class ItemHomeTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var viewCountLabel: UILabel!
     @IBOutlet weak var itemStatusLabel: UILabel!
+    @IBOutlet weak var sellerProfileImageView: UIImageView!
     
     // variables
     var item: ItemInfo! {
@@ -42,8 +43,10 @@ class ItemHomeTableViewCell: UITableViewCell {
         mainImageView.clipsToBounds = true
         
         // fetch seller name for uid in this item
-        SalesManager.shared.fetchUserName(withUid: item.uid, withSuccessBlock: {userName in
+        SalesManager.shared.fetchSeller(withUid: item.uid, withSuccessBlock: { (userName, photoURL) in
             self.sellerLabel.text = userName
+            // seller profile image view loading (async)
+            ImageManager.shared.fetchImage(withURL: photoURL, at: self.sellerProfileImageView)
         }, withErrorBlock: nil)
         
         priceLabel.text = item.price
@@ -57,6 +60,10 @@ class ItemHomeTableViewCell: UITableViewCell {
         
         viewCountLabel.text = item.viewCount
         itemStatusLabel.text = item.status
+        
+        // seller profile image view setting
+        sellerProfileImageView.layer.cornerRadius = sellerProfileImageView.bounds.width / 2
+        sellerProfileImageView.layer.masksToBounds = true
     }
     
     override func awakeFromNib() {

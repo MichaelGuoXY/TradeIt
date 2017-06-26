@@ -26,7 +26,7 @@ class Utils {
     }
     
     static func clear() {
-        zipCode = nil
+        userDefault.set(nil, forKey: "zipCode")
     }
     
     /// run block on main thread asyc

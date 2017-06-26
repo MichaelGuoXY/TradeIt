@@ -102,7 +102,7 @@ class LoginViewController: UIViewController, GIDSignInUIDelegate {
                 present(enterZipCodeVC, animated: true, completion: nil)
             }
         } else {
-            if let homeVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewController") as? HomeViewController {
+            if let homeVC = storyboard?.instantiateViewController(withIdentifier: "HomeViewNavigationController") as? UINavigationController {
                 present(homeVC, animated: true, completion: nil)
             } else {
                 print("Error found when trying to present home view controller")

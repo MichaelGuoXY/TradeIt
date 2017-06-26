@@ -23,6 +23,18 @@ class HomeViewController: UIViewController {
         }
     }
     
+    // var used to determine scroll view direction
+    var lastContentOffset: CGPoint! = CGPoint()
+    
+    // vars to store origin button y
+    var yBtn01: CGFloat!
+    var yBtn02: CGFloat!
+    var yBtn03: CGFloat!
+    
+    // bool to determine whether buttons are shown
+    var isBtnShown = true
+    var isAnimating = false
+    
     @IBAction func postNewItemButtonClicked(_ sender: UIButton) {
         if let postNewItemVC = storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
             postNewItemVC.viewType = .new
@@ -38,25 +50,35 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         // table view setup
         tableView.delegate = self
         tableView.dataSource = self
         tableView.estimatedRowHeight = 205.0
         tableView.rowHeight = UITableViewAutomaticDimension
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         // fetch items that meet requirements
         Utils.getZipCodes(at: Utils.zipCode!, within: 5, withSuccessBlock: { zipCodes in
             for zipCode in zipCodes {
-                SalesManager.shared.fetchItems(with: zipCode, withSuccessBlock: { items in
-                    self.items = items
+                SalesManager.shared.fetchItems(with: zipCode, withSuccessBlock: { item in
+                    self.items.append(item)
                 }, withErrorBlock: nil)
             }
         }, withErrorBlock: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        // init buttons vars
+        yBtn01 = searchButton.frame.origin.y
+        yBtn02 = postNewItemButton.frame.origin.y
+        yBtn03 = profileButton.frame.origin.y
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     override func didReceiveMemoryWarning() {
@@ -64,17 +86,57 @@ class HomeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    /// Hide three buttons animation
+    func hideButton1() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.searchButton.frame.origin.y = self.view.frame.size.height
+        }, completion: { _ in
+            self.hideButton2()
+        })
+    }
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destinationViewController.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    func hideButton2() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.postNewItemButton.frame.origin.y = self.view.frame.size.height
+        }, completion: { _ in
+            self.hideButton3()
+        })
+    }
     
+    func hideButton3() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.profileButton.frame.origin.y = self.view.frame.size.height
+        }, completion: { _ in
+            self.isAnimating = false
+            self.isBtnShown = false
+        })
+    }
+    
+    /// Show three buttons animation
+    func showButton1() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.searchButton.frame.origin.y = self.yBtn01
+        }, completion: { _ in
+            self.showButton2()
+        })
+    }
+    
+    func showButton2() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.postNewItemButton.frame.origin.y = self.yBtn02
+        }, completion: { _ in
+            self.showButton3()
+        })
+    }
+    
+    func showButton3() {
+        UIView.animate(withDuration: 0.2, animations: {
+            self.profileButton.frame.origin.y = self.yBtn03
+        }, completion: { _ in
+            self.isAnimating = false
+            self.isBtnShown = true
+        })
+    }
 }
 
 extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
@@ -95,5 +157,49 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // navigation controller push detail view onto top
+        let detailVC = storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
+        detailVC.viewType = .detail
+        detailVC.item = items[indexPath.row]
+        navigationController?.pushViewController(detailVC, animated: true)
+    }
+}
+
+extension HomeViewController: UIScrollViewDelegate {
+    
+    func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
+        lastContentOffset = scrollView.contentOffset
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if lastContentOffset.x < scrollView.contentOffset.x {
+            print("Scrolled Right")
+        }
+        else if lastContentOffset.x > scrollView.contentOffset.x {
+            print("Scrolled Left")
+        }
+            
+        else if lastContentOffset.y < scrollView.contentOffset.y {
+            print("Scrolled Down")
+            // Hide three buttons
+            if isBtnShown && !isAnimating {
+                isAnimating = true
+                hideButton1()
+            }
+        }
+            
+        else if lastContentOffset.y > scrollView.contentOffset.y {
+            print("Scrolled Up")
+            // Show three buttons
+            if !isBtnShown && !isAnimating {
+                isAnimating = true
+                showButton1()
+            }
+        }
     }
 }

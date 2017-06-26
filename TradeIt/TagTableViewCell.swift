@@ -26,24 +26,19 @@ class TagTableViewCell: UITableViewCell {
     
     func setupCellAttrs() {
         tagTextField.layer.borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
-        tagTextField.layer.borderWidth = {
-            if let viewType = viewType {
-                if viewType == .preview {
-                    return 0.0
-                } else {
-                    return 2.0
-                }
-            } else {
-                return 2.0
-            }
-        }()
+        
         tagTextField.layer.cornerRadius = 5.0
+        tagTextField.backgroundColor = UIColor.clear
         tagTextField.layer.masksToBounds = true
         if let viewType = viewType {
-            if viewType == .preview {
+            if viewType == .preview || viewType == .detail {
                 tagTextField.isEnabled = false
+                tagTextField.borderStyle = .none
+                tagTextField.layer.borderWidth = 0.0
             } else {
                 tagTextField.isEnabled = true
+                tagTextField.borderStyle = .roundedRect
+                tagTextField.layer.borderWidth = 2.0
             }
         }
     }
