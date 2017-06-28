@@ -35,22 +35,28 @@ class ItemDetailViewController: UIViewController {
             // button title changes
             switch viewType! {
             case .new, .edit:
-                    self.leftButton.setTitle("Cancel", for: .normal)
-                    self.leftButton.backgroundColor = UIColor.yellow
-                    self.rightButton.setTitle("Continue", for: .normal)
-                    self.rightButton.backgroundColor = UIColor.green
+                self.leftButton.setTitle("Cancel", for: .normal)
+                self.leftButton.backgroundColor = UIColor.yellow
+                self.rightButton.setTitle("Continue", for: .normal)
+                self.rightButton.backgroundColor = UIColor.green
             case .preview:
-                    self.leftButton.setTitle("Edit", for: .normal)
-                    self.leftButton.backgroundColor = UIColor.orange
-                    self.rightButton.setTitle("Post", for: .normal)
-                    self.rightButton.backgroundColor = UIColor.black
+                self.leftButton.setTitle("Edit", for: .normal)
+                self.leftButton.backgroundColor = UIColor.orange
+                self.rightButton.setTitle("Post", for: .normal)
+                self.rightButton.backgroundColor = UIColor.black
             case .detail:
-                    self.leftButton.setTitle("Back", for: .normal)
-                    self.leftButton.backgroundColor = UIColor.blue
-                    self.rightButton.setTitle("Watch", for: .normal)
-                    self.rightButton.backgroundColor = UIColor.red
-                    self.tableViewTopConstraint.constant = -64.0
+                self.leftButton.setTitle("Back", for: .normal)
+                self.leftButton.backgroundColor = UIColor.blue
+                self.rightButton.setTitle("Watch", for: .normal)
+                self.rightButton.backgroundColor = UIColor.red
+                self.tableViewTopConstraint.constant = -64.0
             }
+            
+            // layout buttons
+            view.addSubview(leftButton)
+            view.addSubview(rightButton)
+            view.bringSubview(toFront: leftButton)
+            view.bringSubview(toFront: rightButton)
         }
     }
     
@@ -60,6 +66,8 @@ class ItemDetailViewController: UIViewController {
     let tagTableViewCellReuseID = "TagTableViewCell"
     let priceTableViewCellReuseID = "PriceTableViewCell"
     let detailTableVIewCellReuseID = "DetailTableViewCell"
+    let commentTableViewCellReuseID = "CommentTableViewCell"
+    let enterCommentTableViewCellReuseID = "EnterCommentTableViewCell"
     
     // collection view cell
     let imagePickerAddButtonReuseID = "ImagePickerCollectionViewCellAdd"
@@ -87,8 +95,25 @@ class ItemDetailViewController: UIViewController {
         }
     }
     
+    var comments: [Comment] = [] {
+        didSet {
+            if viewType != .detail {
+                return
+            }
+            // .detail mode
+            tableView.reloadData()
+        }
+    }
+    
+    var heightForCommentCells: [Int: CGFloat] = [:] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     // Detail view status
     var isDetailEditing: Bool = false
+    var isCommentEditing: Bool = false
     
     // buttons
     lazy var leftButton: UIButton = {[unowned self] in
@@ -101,6 +126,7 @@ class ItemDetailViewController: UIViewController {
         
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "ChalkboardSE-Regular", size: 22)
+        button.addTarget(self, action: #selector(ItemDetailViewController.leftButtonClicked(_:)), for: .touchUpInside)
         return button
         }()
     
@@ -113,6 +139,7 @@ class ItemDetailViewController: UIViewController {
                                             height: buttonHeight))
         button.setTitleColor(UIColor.white, for: .normal)
         button.titleLabel?.font = UIFont(name: "ChalkboardSE-Regular", size: 22)
+        button.addTarget(self, action: #selector(ItemDetailViewController.rightButtonClicked(_:)), for: .touchUpInside)
         return button
         }()
     
@@ -139,6 +166,11 @@ class ItemDetailViewController: UIViewController {
                     self.item.getDetail(fromJSON: dict)
                     self.imageViews = ImageManager.shared.fetchImage(with: self.item)
                 }, withErrorBlock: nil)
+                
+                // pre-fetch comments for this item
+                CommentManager.shared.fetchComments(withSid: item.sid!, withSuccessBlock: { comments in
+                    self.comments = comments
+                }, withErrorBlock: nil)
             }
         }
     }
@@ -158,16 +190,6 @@ class ItemDetailViewController: UIViewController {
         // init for vars
         rowHeightForImagePickerCellAll = rowHeightForImagePickerCell + rowHeightForImagePickerCellOffSet
         
-        // layout buttons
-        view.addSubview(leftButton)
-        view.addSubview(rightButton)
-        view.bringSubview(toFront: leftButton)
-        view.bringSubview(toFront: rightButton)
-        
-        // buttons action
-        leftButton.addTarget(self, action: #selector(ItemDetailViewController.leftButtonClicked(_:)), for: .touchUpInside)
-        rightButton.addTarget(self, action: #selector(ItemDetailViewController.rightButtonClicked(_:)), for: .touchUpInside)
-        
         // table view setup
         tableView.delegate = self
         tableView.dataSource = self
@@ -186,6 +208,8 @@ class ItemDetailViewController: UIViewController {
         // table view bottom
         self.tableViewBottomConstraint.constant = 50.0
         
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = 100; // set to whatever your "average" cell height is
     }
     
     // Deal with keyboard notification
@@ -209,6 +233,9 @@ class ItemDetailViewController: UIViewController {
                             if self.isDetailEditing {
                                 self.tableView.scrollToRow(at: IndexPath(row: 4, section: 0), at: .bottom, animated: true)
                                 self.isDetailEditing = false
+                            } else if self.isCommentEditing {
+                                self.tableView.scrollToRow(at: IndexPath(row: 4 + self.comments.count + 1, section: 0), at: .bottom, animated: true)
+                                self.isCommentEditing = false
                             }
             })
         }
@@ -326,9 +353,12 @@ extension ItemDetailViewController: UIGestureRecognizerDelegate {
 }
 
 extension ItemDetailViewController: UITextViewDelegate {
+    // tag 10 for detail text view
+    // tag 11 for comment text view
     
     func textViewDidBeginEditing(_ textView: UITextView) {
-        isDetailEditing = true
+        if textView.tag == 10 { isDetailEditing = true }
+        if textView.tag == 11 { isCommentEditing = true }
     }
     
     func textViewDidEndEditing(_ textView: UITextView) {
@@ -344,8 +374,12 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 5
+        switch viewType! {
+        case .detail:
+            return 5 + comments.count + 1
+        default:
+            return 5
+        }
     }
     
     
@@ -399,10 +433,10 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case 4:
             if let cell = tableView.dequeueReusableCell(withIdentifier: detailTableVIewCellReuseID, for: indexPath) as? DetailTableViewCell {
                 cell.viewType = viewType
+                cell.detailTextView.delegate = self
                 switch viewType! {
                 case .preview:
                     itemDetail = cell.detailTextView.text
-                    cell.detailTextView.delegate = self
                 case .detail:
                     cell.detailTextView.text = item.details
                 default:
@@ -410,8 +444,22 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
                 }
                 return cell
             }
+        case 4 + comments.count + 1:
+            // enter comment cell
+            if let cell = tableView.dequeueReusableCell(withIdentifier: enterCommentTableViewCellReuseID, for: indexPath) as? EnterCommentTableViewCell {
+                cell.sid = item.sid!
+                cell.to = item.uid!
+                cell.msgTextView.delegate = self
+                return cell
+            }
         default:
-            break
+            // comment cell
+            if let cell = tableView.dequeueReusableCell(withIdentifier: commentTableViewCellReuseID, for: indexPath) as? CommentTableViewCell {
+                cell.comment = comments[indexPath.row - 4 - 1]
+                cell.delegate = self
+                cell.row = indexPath.row
+                return cell
+            }
         }
         return UITableViewCell()
     }
@@ -433,11 +481,22 @@ extension ItemDetailViewController: UITableViewDelegate, UITableViewDataSource {
             else {
                 return 200
             }
+        case 4 + comments.count + 1:
+            return 300
         default:
-            return 50
+            return heightForCommentCells[indexPath.row - 4 - 1] ?? 50
         }
     }
     
+}
+
+extension ItemDetailViewController: CommentTableViewCellDelegate {
+    func reloadTableView(atRow row: Int, forHeight height: CGFloat) {
+        if heightForCommentCells[row - 4 - 1] == nil {
+            heightForCommentCells[row - 4 - 1] = height
+            tableView.reloadData()
+        }
+    }
 }
 
 

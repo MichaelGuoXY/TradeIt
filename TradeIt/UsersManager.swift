@@ -97,4 +97,24 @@ class UsersManager {
             }
         })
     }
+    
+    /// Fetch user name and profile image with uid
+    func fetchUsernameAndProfileImageURL(withUid uid: String, withSuccessBlock sblock: ((String, String) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        ref.child("users").child(uid).observeSingleEvent(of: .value, with: { snapshot in
+            if snapshot.exists() {
+                // success
+                if let dict = snapshot.value as? [String: Any] {
+                    let photoURL = dict["photoURL"] as? String ?? ""
+                    let userName = dict["userName"] as? String ?? "anonymous"
+                    sblock?(userName, photoURL)
+                } else {
+                    
+                }
+            } else {
+                let errorInfo = "Error found when fetch user name and profile iamge URL..."
+                print(errorInfo)
+                eblock?(errorInfo)
+            }
+        })
+    }
 }

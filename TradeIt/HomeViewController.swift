@@ -50,7 +50,7 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // table view setup
         tableView.delegate = self
         tableView.dataSource = self
@@ -71,10 +71,11 @@ class HomeViewController: UIViewController {
         super.viewDidAppear(animated)
         
         // init buttons vars
-        yBtn01 = searchButton.frame.origin.y
-        yBtn02 = postNewItemButton.frame.origin.y
-        yBtn03 = profileButton.frame.origin.y
-        
+        if isBtnShown && !isAnimating {
+            yBtn01 = searchButton.frame.origin.y
+            yBtn02 = postNewItemButton.frame.origin.y
+            yBtn03 = profileButton.frame.origin.y
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
