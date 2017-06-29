@@ -11,7 +11,7 @@ import UIKit
 class TitleTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleTextField: UITextField!
-    var viewType: ItemDetailViewType! {
+    var viewType: NewItemViewType! {
         didSet {
             setupCellAttrs()
         }
@@ -30,7 +30,7 @@ class TitleTableViewCell: UITableViewCell {
         titleTextField.backgroundColor = UIColor.clear
         titleTextField.layer.masksToBounds = true
         if let viewType = viewType {
-            if viewType == .preview || viewType == .detail {
+            if viewType == .preview {
                 titleTextField.isEnabled = false
                 titleTextField.borderStyle = .none
                 titleTextField.layer.borderWidth = 0.0

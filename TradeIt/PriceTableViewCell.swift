@@ -12,7 +12,7 @@ class PriceTableViewCell: UITableViewCell {
 
     @IBOutlet weak var priceTextField: UITextField!
     
-    var viewType: ItemDetailViewType! {
+    var viewType: NewItemViewType! {
         didSet {
             setupCellAttrs()
         }
@@ -31,7 +31,7 @@ class PriceTableViewCell: UITableViewCell {
         priceTextField.backgroundColor = UIColor.clear
         priceTextField.layer.masksToBounds = true
         if let viewType = viewType {
-            if viewType == .preview || viewType == .detail {
+            if viewType == .preview {
                 priceTextField.isEnabled = false
                 priceTextField.borderStyle = .none
                 priceTextField.layer.borderWidth = 0.0

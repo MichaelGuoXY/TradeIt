@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 
-class ItemInfo {
+class ItemInfo: NSObject {
     /// sid for firebase unique timestamp id
     var sid: String?
     

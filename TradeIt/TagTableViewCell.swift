@@ -12,7 +12,7 @@ class TagTableViewCell: UITableViewCell {
 
     @IBOutlet weak var tagTextField: UITextField!
     
-    var viewType: ItemDetailViewType! {
+    var viewType: NewItemViewType! {
         didSet {
             setupCellAttrs()
         }
@@ -31,7 +31,7 @@ class TagTableViewCell: UITableViewCell {
         tagTextField.backgroundColor = UIColor.clear
         tagTextField.layer.masksToBounds = true
         if let viewType = viewType {
-            if viewType == .preview || viewType == .detail {
+            if viewType == .preview {
                 tagTextField.isEnabled = false
                 tagTextField.borderStyle = .none
                 tagTextField.layer.borderWidth = 0.0

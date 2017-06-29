@@ -12,7 +12,7 @@ class ImagePickerTableViewCell: UITableViewCell {
     
     @IBOutlet weak var collectionView: UICollectionView!
     
-    var viewType: ItemDetailViewType! {
+    var viewType: NewItemViewType! {
         didSet {
             setupCellAttrs()
         }
@@ -28,7 +28,7 @@ class ImagePickerTableViewCell: UITableViewCell {
         collectionView.layer.borderColor = UIColor(red: 204.0/255.0, green: 204.0/255.0, blue: 204.0/255.0, alpha: 1.0).cgColor
         collectionView.layer.borderWidth = {
             if let viewType = viewType {
-                if viewType == .preview || viewType == .detail {
+                if viewType == .preview {
                     return 0.0
                 } else {
                     return 2.0

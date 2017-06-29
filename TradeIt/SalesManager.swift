@@ -111,22 +111,22 @@ class SalesManager {
     }
     
     /// Fetch items that meets zip code requirement
-    func fetchItems(with zipCode: String, withSuccessBlock sblock: ((ItemInfo) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
-        fetchSids(with: zipCode, withSuccessBlock: { sids in
+    func fetchItems(with zipCode: String, withSuccessBlock sblock: ((String, [String: Any]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        fetchSids(with: zipCode, withSuccessBlock: { [weak self] sids in
+            guard let strongSelf = self else { return }
             for sid in sids {
-                self.fetchItemBrief(with: sid, withSuccessBlock: { item in
+                strongSelf.fetchItemBrief(with: sid, withSuccessBlock: { (sid, dict) in
                     // success
-                    sblock?(item)
+                    sblock?(sid, dict)
                 }, withErrorBlock: nil)
             }
         }, withErrorBlock: nil)
     }
     
-    
     /// Fetch items-sid that meets the zip code requirement
     func fetchSids(with zipCode: String, withSuccessBlock sblock: (([String]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         let zipCodeRef = ref.child("zipCodes").child(zipCode)
-        zipCodeRef.observe(.value, with: { snapshot in
+        zipCodeRef.observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 // success
                 if let dict = snapshot.value as? [String: Any] {
@@ -147,21 +147,13 @@ class SalesManager {
     }
     
     /// Fetch single item with sid
-    func fetchItemBrief(with sid: String, withSuccessBlock sblock: ((ItemInfo) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+    func fetchItemBrief(with sid: String, withSuccessBlock sblock: ((String, [String: Any]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         let itemRef = ref.child("sales").child(sid)
-        itemRef.observe(.value, with: { snapshot in
+        itemRef.observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 // success
                 if let dict = snapshot.value as? [String: Any] {
-                    let item = ItemInfo(sid: sid, fromJSON: dict)
-                    if let item = item {
-                        sblock?(item)
-                    } else {
-                        // error
-                        let msg = "item created is nil"
-                        print(msg)
-                        eblock?(msg)
-                    }
+                    sblock?(sid, dict)
                 }
             } else {
                 // error
@@ -175,7 +167,7 @@ class SalesManager {
     /// Fetch item detail info with sid
     func fetchItemDetail(with sid: String, withSuccessBlock sblock: (([String: Any]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
         let itemRef = ref.child("salesDetail").child(sid)
-        itemRef.observe(.value, with: { snapshot in
+        itemRef.observeSingleEvent(of: .value, with: { snapshot in
             if snapshot.exists() {
                 // success
                 if let dict = snapshot.value as? [String: Any] {
@@ -188,5 +180,10 @@ class SalesManager {
                 eblock?(msg)
             }
         })
+    }
+    
+    /// Remove all observers
+    func removeAllObservers() {
+        ref.removeAllObservers()
     }
 }

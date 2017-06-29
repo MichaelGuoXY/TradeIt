@@ -33,20 +33,13 @@ class CommentManager {
         })
     }
     
-    func fetchComments(withSid sid: String, withSuccessBlock sblock: (([Comment]) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
-        ref.child("comments").child(sid).observe(.value, with: { snapshot in
+    func fetchComments(withSid sid: String, withSuccessBlock sblock: ((Comment) -> Void)? = nil, withErrorBlock eblock: ((String) -> Void)? = nil) {
+        ref.child("comments").child(sid).observe(.childAdded, with: { snapshot in
             if snapshot.exists() {
                 if let dict = snapshot.value as? [String: Any] {
-                    let arr = Array(dict.values)
-                    var comments: [Comment] = []
-                    for o in arr {
-                        if let commentJSON = o as? [String: Any] {
-                            let comment = Comment(sid: sid, fromJSON: commentJSON)
-                            comments.append(comment!)
-                        }
-                    }
+                    let comment = Comment(sid: sid, fromJSON: dict)
                     // success
-                    sblock?(comments)
+                    sblock?(comment!)
                 }
             } else {
                 let errorInfo = "Error found when try to fetch comment with sid"
@@ -54,5 +47,9 @@ class CommentManager {
                 eblock?(errorInfo)
             }
         })
+    }
+    
+    func removeObservers(withSid sid: String) {
+        ref.child("comments").child(sid).removeAllObservers()
     }
 }

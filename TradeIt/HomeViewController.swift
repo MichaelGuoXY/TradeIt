@@ -36,7 +36,7 @@ class HomeViewController: UIViewController {
     var isAnimating = false
     
     @IBAction func postNewItemButtonClicked(_ sender: UIButton) {
-        if let postNewItemVC = storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as? ItemDetailViewController {
+        if let postNewItemVC = storyboard?.instantiateViewController(withIdentifier: "NewItemViewController") as? NewItemViewController {
             postNewItemVC.viewType = .new
             present(postNewItemVC, animated: true, completion: nil)
         }
@@ -60,11 +60,20 @@ class HomeViewController: UIViewController {
         // fetch items that meet requirements
         Utils.getZipCodes(at: Utils.zipCode!, within: 5, withSuccessBlock: { zipCodes in
             for zipCode in zipCodes {
-                SalesManager.shared.fetchItems(with: zipCode, withSuccessBlock: { item in
-                    self.items.append(item)
-                }, withErrorBlock: nil)
+                SalesManager.shared.fetchItems(with: zipCode, withSuccessBlock: { [weak self] (sid, dict) in
+                    guard let strongSelf = self else { return }
+                    let item = ItemInfo(sid: sid, fromJSON: dict)
+                    if let item = item {
+                        strongSelf.items.append(item)
+                    }
+                    }, withErrorBlock: nil)
             }
         }, withErrorBlock: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -165,7 +174,6 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         
         // navigation controller push detail view onto top
         let detailVC = storyboard?.instantiateViewController(withIdentifier: "ItemDetailViewController") as! ItemDetailViewController
-        detailVC.viewType = .detail
         detailVC.item = items[indexPath.row]
         navigationController?.pushViewController(detailVC, animated: true)
     }

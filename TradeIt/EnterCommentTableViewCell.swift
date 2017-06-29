@@ -39,6 +39,9 @@ class EnterCommentTableViewCell: UITableViewCell {
         commentButton.layer.cornerRadius = 5
         commentButton.layer.masksToBounds = true
         
+        // time label
+        updateTimeLabel()
+        
         // fetch user profile image
         if let uid = Auth.auth().currentUser?.uid {
             UsersManager.shared.fetchUsernameAndProfileImageURL(withUid: uid, withSuccessBlock: { (userName, photoURL) in
@@ -47,7 +50,8 @@ class EnterCommentTableViewCell: UITableViewCell {
             }, withErrorBlock: nil)
         }
         
-        Timer.scheduledTimer(timeInterval: 30, target: self, selector: #selector(self.updateTimeLabel), userInfo: nil, repeats: true)
+        weak var weakSelf = self
+        Timer.scheduledTimer(timeInterval: 59, target: weakSelf!, selector: #selector(weakSelf!.updateTimeLabel), userInfo: nil, repeats: true)
     }
     
     func updateTimeLabel() {
