@@ -69,6 +69,14 @@ class ItemDetailViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardNotification(notification:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.isHidden = false
+        navigationController?.navigationBar.tintColor = UIColor.black
+        title = item.title
+    }
+    
     // Deal with keyboard notification
     func keyboardNotification(notification: NSNotification) {
         if let userInfo = notification.userInfo {

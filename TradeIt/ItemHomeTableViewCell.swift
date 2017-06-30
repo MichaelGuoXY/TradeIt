@@ -38,9 +38,12 @@ class ItemHomeTableViewCell: UITableViewCell {
             return
         }
         titleLabel.text = item.title
+        titleLabel.sizeToFit()
+
         // download image for this item
         ImageManager.shared.fetchImage(with: item, at: mainImageView)
         mainImageView.clipsToBounds = true
+        mainImageView.backgroundColor = UIColor.clear
         
         // fetch seller name for uid in this item
         SalesManager.shared.fetchSeller(withUid: item.uid, withSuccessBlock: { (userName, photoURL) in
@@ -52,6 +55,7 @@ class ItemHomeTableViewCell: UITableViewCell {
         priceLabel.text = item.price
         
         detailTextView.text = item.details
+        detailTextView.backgroundColor = UIColor.clear
         detailTextView.isEditable = false
         
         tagLabel.text = item.tags
@@ -64,6 +68,8 @@ class ItemHomeTableViewCell: UITableViewCell {
         // seller profile image view setting
         sellerProfileImageView.layer.cornerRadius = sellerProfileImageView.bounds.width / 2
         sellerProfileImageView.layer.masksToBounds = true
+        
+        
     }
     
     override func awakeFromNib() {
@@ -76,5 +82,7 @@ class ItemHomeTableViewCell: UITableViewCell {
         
         // Configure the view for the selected state
     }
+    
+    
     
 }
